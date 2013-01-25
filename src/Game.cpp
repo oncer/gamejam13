@@ -41,6 +41,11 @@ void Game::run(void)
         throw std::runtime_error("failed to initialize allegro primitives addon!\n");
     }
     al_init_font_addon();
+    al_init_acodec_addon();
+
+    if (!al_install_audio()) {
+        throw std::runtime_error("failed to initialize audio!\n");
+    }
 
     if (!al_install_keyboard()) {
         throw std::runtime_error("failed to initialize keyboard!\n");
