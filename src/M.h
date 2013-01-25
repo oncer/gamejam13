@@ -6,6 +6,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include <iostream>
 #include <stdexcept>
 #include <map>
@@ -63,6 +65,7 @@ s32 fp_atan2(const point& p);
 s32 fp_sin(s32 angle);
 s32 fp_cos(s32 angle);
 point motion_vector(const point& direction, s32 speed);
+int bpm_to_frames(int bpm); //calculate frames needed for one beat, assuming 1s = FPS frames per second
 
 void pc_start();
 void pc_end(const char* name);

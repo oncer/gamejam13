@@ -2,6 +2,8 @@
 #define GAME_H
 
 #include "sdk.h"
+#include "Stave.h"
+#include "Background.h"
 
 class Game
 {
@@ -14,6 +16,9 @@ class Game
 
     protected:
         ALLEGRO_TIMER* timer;
+
+		Stave stave;
+		Background background;
 
         bool paused;
 };

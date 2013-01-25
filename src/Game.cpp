@@ -41,6 +41,11 @@ void Game::run(void)
         throw std::runtime_error("failed to initialize allegro primitives addon!\n");
     }
     al_init_font_addon();
+    al_init_acodec_addon();
+
+    if (!al_install_audio()) {
+        throw std::runtime_error("failed to initialize audio!\n");
+    }
 
     if (!al_install_keyboard()) {
         throw std::runtime_error("failed to initialize keyboard!\n");
@@ -113,9 +118,16 @@ void Game::run(void)
             frames_drawn++;
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
+			
+			background.draw();
+			stave.draw();
+
+
+
             char c_fps[20];
             snprintf(c_fps, 20, "@%d@", fps);
             GFX::text(FONT_DEFAULT, 360, 220, c_fps);
+			
 
             al_flip_display();
         }/* else if (redraw && !al_is_event_queue_empty(refresh_queue)) {
