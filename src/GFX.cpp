@@ -2,8 +2,8 @@
 
 BitmapLib& bmplib()
 {
-   static BitmapLib _bmp;
-   return _bmp;
+    static BitmapLib _bmp;
+    return _bmp;
 }
 
 BitmapLib::BitmapLib(void)
@@ -38,11 +38,11 @@ void BitmapLib::load()
 
 ALLEGRO_BITMAP* BitmapLib::get(const char* id)
 {
-	IndexMap::iterator it = m_index.find(std::string(id));
-	if (it != m_index.end()) {
-		return it->second;
-	}
-	throw std::runtime_error(std::string("[BitmapLib] No bitmap with id ") + id + std::string(" found"));
+    IndexMap::iterator it = m_index.find(std::string(id));
+    if (it != m_index.end()) {
+        return it->second;
+    }
+    throw std::runtime_error(std::string("[BitmapLib] No bitmap with id ") + id + std::string(" found"));
 }
 
 point BitmapLib::getDimensions(const char* id)
@@ -78,7 +78,7 @@ void GFX::blit_alpha(const char* bmp, const rect& src, s32 dst_x, s32 dst_y, u8 
     if (h_flip) flags |= ALLEGRO_FLIP_HORIZONTAL;
     if (v_flip) flags |= ALLEGRO_FLIP_VERTICAL;
     al_draw_tinted_bitmap_region(allegro_bitmap, al_map_rgba(alpha, alpha, alpha, alpha),
-                                     src.x, src.y, src.w, src.h, (float)dst_x, (float)dst_y, 0);
+            src.x, src.y, src.w, src.h, (float)dst_x, (float)dst_y, 0);
 }
 
 void GFX::blit_flipped(const char* bmp, const rect& src, s32 dst_x, s32 dst_y, bool h_flip, bool v_flip)
@@ -88,7 +88,7 @@ void GFX::blit_flipped(const char* bmp, const rect& src, s32 dst_x, s32 dst_y, b
     if (h_flip) flags |= ALLEGRO_FLIP_HORIZONTAL;
     if (v_flip) flags |= ALLEGRO_FLIP_VERTICAL;
     al_draw_bitmap_region(allegro_bitmap,
-                          src.x, src.y, src.w, src.h, (float)dst_x, (float)dst_y, flags);
+            src.x, src.y, src.w, src.h, (float)dst_x, (float)dst_y, flags);
 }
 
 void GFX::blit_rotated(const char *bmp, const rect &src, s32 dst_x, s32 dst_y, u8 alpha, s32 angle, bool h_flip, bool v_flip)
@@ -99,12 +99,12 @@ void GFX::blit_rotated(const char *bmp, const rect &src, s32 dst_x, s32 dst_y, u
     if (h_flip) flags |= ALLEGRO_FLIP_HORIZONTAL;
     if (v_flip) flags |= ALLEGRO_FLIP_VERTICAL;
     al_draw_tinted_scaled_rotated_bitmap_region(allegro_bitmap,
-                                                src.x, src.y, src.w, src.h,
-                                                al_map_rgba(alpha, alpha, alpha, alpha),
-                                                (float)src.w/2.0f, (float)src.h/2.0f,
-                                                (float)dst_x + (float)src.w/2.0f, (float)dst_y + (float)src.h/2.0f,
-                                                1.0f, 1.0f,
-                                                (float)angle * DEG2RAD, flags);
+            src.x, src.y, src.w, src.h,
+            al_map_rgba(alpha, alpha, alpha, alpha),
+            (float)src.w/2.0f, (float)src.h/2.0f,
+            (float)dst_x + (float)src.w/2.0f, (float)dst_y + (float)src.h/2.0f,
+            1.0f, 1.0f,
+            (float)angle * DEG2RAD, flags);
 }
 
 void GFX::text(FontType font, s32 dst_x, s32 dst_y, const char *str, u32 color)
@@ -113,3 +113,4 @@ void GFX::text(FontType font, s32 dst_x, s32 dst_y, const char *str, u32 color)
     ALLEGRO_COLOR alColor = al_map_rgba(color>>24, (color>>16)&0xff, (color>>8)&0xff, color&0xff);
     al_draw_text(alFont, alColor, dst_x, dst_y, 0, str);
 }
+

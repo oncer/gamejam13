@@ -9,3 +9,5 @@ const int HEIGHT = 240; // game surface height
 
 const int FPS  = 60; // frames per second
 
+const int MAX_PARTICLES = 2048;
+
