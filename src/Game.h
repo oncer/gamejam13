@@ -4,6 +4,8 @@
 #include "sdk.h"
 #include "Stave.h"
 #include "Background.h"
+#include "Song.h"
+#include "ParticleEmitter.h"
 
 class Game
 {
@@ -16,11 +18,15 @@ class Game
 
 		s32 getCurrentFrameID() { return frameID; }
 
+		ParticleEmitter& getParticles() { return particles; }
+
     protected:
         ALLEGRO_TIMER* timer;
 
 		Stave stave;
 		Background background;
+		Song song;
+		ParticleEmitter particles;
 
 		s32 frameID;
 

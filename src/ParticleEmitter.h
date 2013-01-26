@@ -25,6 +25,12 @@ public:
         velocity.x = x;
         velocity.y = y;
     }
+
+	void setAcceleration(s32 x, s32 y) {
+		accel.x = x;
+		accel.y = y;
+	}
+
     void setDrag(s32 x, s32 y) {
         drag.x = x; drag.y = y;
     }

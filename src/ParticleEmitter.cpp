@@ -1,5 +1,6 @@
 #include "ParticleEmitter.h"
 #include "Define.h"
+#include "Globals.h"
 
 ParticleEmitter::ParticleEmitter()
     :particles(MAX_PARTICLES)
@@ -9,28 +10,27 @@ ParticleEmitter::ParticleEmitter()
 void ParticleEmitter::addEffect(EffectType effect, const point &pos)
 {
     int i, len;
-    switch (effect) {
-    case EFFECT_BLOODSQUIRT:
-    {
-        len = randint(4,7);
-        for (i=0; i<len; i++) {
-			Particle* p;
-			if (len < 5) {
-				Particle* p = addParticle(Particle::BLOOD_SMALL);
-			} else {
-				Particle* p = addParticle(Particle::BLOOD_BIG);
+	switch (effect) {
+		case EFFECT_BLOODSQUIRT:
+			{
+				len = randint(14,28);
+				for (i=0; i<len; i++) {
+					Particle* p;
+					if (i < 20) {
+						p = addParticle(Particle::BLOOD_SMALL);
+					} else {
+						p = addParticle(Particle::BLOOD_BIG);
+					}
+					if (p != NULL) {
+						p->setCenter(pos);
+						point dir = {randint(-PX/2, PX/2), randint(-PX, 0)};
+						p->setVelocity(dir.x, dir.y);
+						p->setAcceleration(0, PX/16); // gravity
+					}
+				}
+				break;
 			}
-            if (p != NULL) {
-                p->setCenter(pos);
-                point dir = {randint(-1024, 1024), randint(-1024, 256)};
-                point v = motion_vector(dir, PX/2);
-                p->setVelocity(v.x, v.y);
-				p->setAcceleration(0, PX/4); // gravity
-            }
-        }
-        break;
-    }
-    }
+	}
 }
 
 Particle* ParticleEmitter::addParticle(Particle::ParticleType particleType)
@@ -72,8 +72,8 @@ void Particle::init(ParticleType type)
 			for (i=0; i<7; i++) {
 				add_sprite_rect("blood", i*4, 32, 8, 8);
 			}
-			display_offset.x = display_offset.y = -4;
-			pos.w = pos.h = 0<<FPSH;
+			display_offset.x = display_offset.y = -2;
+			pos.w = pos.h = 4<<FPSH;
 			anim_delay = randint(4,8);
 			anim_wait = anim_delay * randint(1, 2);
 			alive = true;
@@ -85,10 +85,10 @@ void Particle::init(ParticleType type)
 			for (i=0; i<4; i++) {
 				add_sprite_rect("blood", i*4, bloodtype*4, 4, 4);
 			}
-			display_offset.x = display_offset.y = -2;
-			pos.w = pos.h = 0<<FPSH;
-			anim_delay = randint(2, 6);
-			anim_wait = anim_delay * randint(1, 2);
+			display_offset.x = display_offset.y = -1;
+			pos.w = pos.h = 2<<FPSH;
+			anim_delay = randint(8, 12);
+			anim_wait = anim_delay * randint(1, 3);
 			alive = true;
 			collisionResponse = false;
 			break;
@@ -110,8 +110,10 @@ void Particle::update()
         }
 		if (type == BLOOD_BIG) {
 			Particle* p = emitter.addParticle(BLOOD_SMALL);
-			p->setCenter(getCenter());
-			p->setAcceleration(0, PX/4);
+			if (p != NULL) {
+				p->setCenter(getCenter());
+				p->setAcceleration(0, PX/16);
+			}
 		}
     }
 }

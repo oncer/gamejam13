@@ -6,7 +6,8 @@
 
 Game::Game(void) :
     timer(NULL),
-    paused(false)
+    paused(false),
+	song("a7c7h7e7")
 {
 }
 
@@ -114,21 +115,42 @@ void Game::run(void)
                     (!step_by_step && ev.type == ALLEGRO_EVENT_TIMER))) {
             redraw = true;
             frames_fired++;
-            // logic here
+
+            // GAME LOGIC
             KBD::Update();
 			frameID++;
 			if (frameID % 60 == 0) {
 				SND::whistle(2);
 			}
+
+			song.update();
+			song.updateNotes();
+
+			particles.update();
+
+			if (frameID % FPS == 0) {
+				point pos = {100<<FPSH, 100<<FPSH};
+				particles.addEffect(EFFECT_BLOODSQUIRT, pos);
+			}
+
+			// END OF GAME LOGIC
         }
 
         if (redraw && al_is_event_queue_empty(refresh_queue)) {
             frames_drawn++;
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
+			// DRAW SPRITES
             background.draw();
             stave.draw();
+			
+			song.drawNotes();
 
+			particles.draw();
+
+			//END OF DRAW SPRITES
+
+			//draw fps
             char c_fps[20];
             snprintf(c_fps, 20, "@%d@", fps);
             GFX::text(FONT_DEFAULT, 360, 220, c_fps);
