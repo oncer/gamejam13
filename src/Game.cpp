@@ -155,8 +155,8 @@ void Game::run(void)
 			particles.draw();
 
 			//filters
-			filterFilm.draw();
 			filterDark.draw();
+			filterFilm.draw();
 
 
 			//END OF DRAW SPRITES
