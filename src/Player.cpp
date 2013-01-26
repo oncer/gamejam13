@@ -41,9 +41,11 @@ void Player::update(void) {
 	//handle keypress
 	if(KBD::JustPressed(KBD::KEY_ACTION) && state != PUMP) { //just pressed key and state not yet set
 		setState(PUMP);
-	} else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
-		setState(IDLE);
-	}
+	} 
+	
+	//else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
+	//	setState(IDLE);
+	//}
 
 
 	//update animation

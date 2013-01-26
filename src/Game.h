@@ -6,6 +6,7 @@
 #include "Background.h"
 #include "Song.h"
 #include "Player.h"
+#include "Demon.h"
 
 class Game
 {
@@ -23,6 +24,7 @@ class Game
 		Background background;
 		Song song;
 		Player player;
+		Demon demon;
 
         bool paused;
 };

@@ -119,6 +119,7 @@ void Game::run(void)
 			song.updateNotes();
 
 			player.update();
+			demon.update();
 
 			// END OF GAME LOGIC
         }
@@ -131,6 +132,7 @@ void Game::run(void)
             background.draw();
 
 			player.draw();
+			demon.draw();
 
           //  stave.draw();
 			song.drawNotes();
