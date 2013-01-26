@@ -23,9 +23,14 @@ void Note::respawn(int _pitch) {
 	add_sprite_rect("notes",0,32*pitch,32,32);
 	add_sprite_rect("notes",32,32*pitch,32,32);
 	add_sprite_rect("notes",64,32*pitch,32,32);
+
+	display_offset.x = -8;
+	display_offset.y = -10;
+	pos.w = (14<<FPSH);
+	pos.h = (12<<FPSH);
 	
 	//set starting position
-	setPosition(pos_max_x * PX, (pitch + 1) * 16 * PX);
+	setPosition(pos_max_x * PX - pos.w/2, (pitch + 2) * 16 * PX - pos.h/2);
 
 	velocity.x = -128;
 
@@ -40,10 +45,11 @@ void Note::draw(void){
 
 void Note::update(void){
 
+	point center = getCenter();
 	if (alive) {
 		Sprite::update();
 
-		if ((pos.x>>FPSH) < pos_min_x) {
+		if ((center.x>>FPSH) < pos_min_x) {
 			alive = false;
 			//note death
 			g_game->getDemon().happy(6);
@@ -52,7 +58,8 @@ void Note::update(void){
 		}
 		
 		Stave& stave = g_game->getStave();
-		if (stave.hitNote(*this)) {
+		if (alive && stave.hitNote(*this)) {
+			SND::hitnote(pitch);
 			alive = false;
 			std::cout << "hit note" << std::endl;
 			g_game->getDemon().hurt(1);
