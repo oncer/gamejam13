@@ -8,10 +8,10 @@ public:
 	Demon(void);
 	~Demon(void);
 	
-	void Demon::update(void);
-	void Demon::draw(void);
-	void Demon::hurt(void);
-	void Demon::happy(void);
+	void update(void);
+	void draw(void);
+	void hurt(void);
+	void happy(void);
 
 protected:
 	enum State {
@@ -22,7 +22,7 @@ protected:
 
 	State state;
 
-	void Demon::setState(State _state);
+	void setState(State _state);
 
 	static const int max_velocity = -80;
 	static const int min_velocity = -4;
