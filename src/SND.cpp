@@ -1,10 +1,12 @@
 #include "SND.h"
 
 ALLEGRO_SAMPLE *SND::s_whistle;
+ALLEGRO_SAMPLE *SND::s_heartbeat;
 
 void SND::load()
 {
 	s_whistle = al_load_sample("sfx/whistle-c.ogg");
+	s_heartbeat = al_load_sample("sfx/heartbeat.ogg");
 }
 
 // obertöne: A B C D E
@@ -23,3 +25,6 @@ void SND::whistle(int pitch)
 	}
 }
 
+void SND::heartbeat() {
+	al_play_sample(s_heartbeat, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}

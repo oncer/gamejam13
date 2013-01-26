@@ -46,6 +46,7 @@ void Player::update(void) {
 		particles.addEffect(EFFECT_BLOODSQUIRT, effectPos);
 		Stave& stave = g_game->getStave();
 		stave.startPulse();
+		SND::heartbeat();
 	}
 	
 	//else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
