@@ -102,6 +102,7 @@ void Particle::init(ParticleType type)
 		anim_delay = 8;
 		alive = true;
 		collisionResponse = false;
+		fadeout = 6;
 	}
     switch (type) {
 		case BLOOD_BIG:
