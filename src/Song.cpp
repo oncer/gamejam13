@@ -2,7 +2,7 @@
 #include "SND.h"
 
 Song::Song(const std::string& _song)
-	:notes(128), song(_song), bpm(120), frames_per_16beat(bpm_to_frames(120)/2)
+	:notes(128), song(_song), bpm(120), frames_per_16beat(bpm_to_frames(120)/2), nextNoteIsObstacle(false)
 {
 	cursor = 0;
 	frame_counter = frames_per_16beat;
@@ -24,6 +24,11 @@ void Song::update(void) {
 	frame_counter++;
 	if(frame_counter >= frames_per_16beat) {
 		//Beat
+		beat_counter++;
+		if(beat_counter >= 4) {
+			SND::timbal();
+			beat_counter = 0;
+		}
 
 		frame_counter = 0;
 		if (pause_counter > 0) { //WAIT
@@ -63,21 +68,26 @@ void Song::update(void) {
 				case 'a':
 					note_val = 4;
 					break;
+				case 'x':
+					nextNoteIsObstacle = true; //obstacle
+					break;
 				default:
 					note_val = 0;
 				}
 
-				//std::cout << "PLAY " << current_value << std::endl;
-				SND::whistle(note_val);
+				if (current_value != 'x') {
+					//std::cout << "PLAY " << current_value << std::endl;
+					SND::whistle(note_val);
 
-				Note* available_note;
-				for(std::vector<Note>::iterator it = notes.begin(); it != notes.end(); ++it) {
-					if (!it->isAlive()) { //find dead note to respawn
-						available_note = &(*it);
+					Note* available_note;
+					for(std::vector<Note>::iterator it = notes.begin(); it != notes.end(); ++it) {
+						if (!it->isAlive()) { //find dead note to respawn
+							available_note = &(*it);
+						}
 					}
+					available_note->respawn(note_val, nextNoteIsObstacle);
+					nextNoteIsObstacle = false;
 				}
-				available_note->respawn(note_val);
-
 			}
 			
 			cursor++;
@@ -96,4 +106,8 @@ void Song::drawNotes(void){
 	for(std::vector<Note>::iterator it = notes.begin(); it != notes.end(); ++it) {
 		it->draw();
 	}
+}
+
+std::string Song::getText(void) {
+	return song;
 }

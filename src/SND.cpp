@@ -2,9 +2,11 @@
 
 ALLEGRO_SAMPLE *SND::s_whistle;
 ALLEGRO_SAMPLE *SND::s_hitnote;
+ALLEGRO_SAMPLE *SND::s_timbal;
 ALLEGRO_SAMPLE *SND::s_background;
 ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL, NULL};
 ALLEGRO_SAMPLE *SND::s_heartbeat;
+ALLEGRO_SAMPLE *SND::s_scream;
 ALLEGRO_SAMPLE_INSTANCE *SND::i_treble;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
@@ -22,7 +24,9 @@ void SND::load()
 	s_ambient[1] = _loadSample("sfx/ambient_breath2.ogg");
 	s_ambient[2] = _loadSample("sfx/ambient1.ogg");
 	s_heartbeat = _loadSample("sfx/heartbeat.ogg");
+	s_scream = _loadSample("sfx/scream.ogg");
 	s_hitnote = _loadSample("sfx/catchnote.ogg");
+	s_timbal = _loadSample("sfx/timbal.ogg");
 
 	i_treble = al_create_sample_instance(_loadSample("sfx/hightremolo.ogg"));
 	al_attach_sample_instance_to_mixer(i_treble, al_get_default_mixer());
@@ -110,6 +114,15 @@ void SND::background(int pitch)
 
 void SND::heartbeat() {
 	al_play_sample(s_heartbeat, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+void SND::timbal() {
+	al_play_sample(s_timbal, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+
+void SND::scream() {
+	al_play_sample(s_scream, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 void SND::ambient(int type) {

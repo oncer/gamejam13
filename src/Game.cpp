@@ -13,9 +13,12 @@ Game::Game(void) :
 	//song("e34d34e34c3d3e34a3h3a344c3a34d3e12h12a1c12e12c1a12h1a1a12c122d1")
 	//song("dhdhdhdhdhdhdhdhd")
 	//song("ccccccccccccccccc")
-	song("e1a3e1a3e1a3e1a3e1a3e1a3")
+	//song("e1a3e1a3e1a3e1a3e1a3e1a3")
 	//song("headache")
+	song(get_file_contents("song.txt"))
 {
+
+	std::cout<<"Song: " << song.getText() << std::endl;
 }
 
 Game::~Game(void)
