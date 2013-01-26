@@ -67,9 +67,7 @@ void Song::update(void) {
 					note_val = 0;
 				}
 
-
-				//TODO play note
-				std::cout << "PLAY " << current_value << std::endl;
+				//std::cout << "PLAY " << current_value << std::endl;
 				SND::whistle(note_val);
 
 				Note* available_note;
