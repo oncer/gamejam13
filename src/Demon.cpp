@@ -11,9 +11,10 @@ Demon::Demon(void) {
 
 	setPosition(320 * PX, 96 * PX);
 
-	velocity.x = -16;
+	velocity.x = 0;
 
 	setState(NORMAL);
+	happy(64);
 }
 
 Demon::~Demon(void) {
@@ -87,6 +88,7 @@ void Demon::happy(int strength){
 	if(velocity.x < max_velocity) {
 		velocity.x = max_velocity;
 	}
+	drag.x = 1;
 }
 
 void Demon::setState(State _state){
