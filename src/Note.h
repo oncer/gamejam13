@@ -1,7 +1,7 @@
 # pragma once
 
 #include "sdk.h"
-#include "sprite.h"
+#include "Sprite.h"
 
 class Note :
 	public Sprite
@@ -9,10 +9,10 @@ class Note :
 	public:
 		Note(void);
 		~Note(void);
-		void Note::draw(void);
-		void Note::update(void);
-		void Note::respawn(int _pitch);
-		bool Note::isAlive(void);
+		void draw(void);
+		void update(void);
+		void respawn(int _pitch);
+		bool isAlive(void);
 
 	protected:
 		static const int pos_max_x = 380;
