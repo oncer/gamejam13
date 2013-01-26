@@ -2,7 +2,7 @@
 
 ALLEGRO_SAMPLE *SND::s_whistle;
 ALLEGRO_SAMPLE *SND::s_background;
-ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL};//, NULL, NULL, NULL, NULL};
+ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL, NULL};
 ALLEGRO_SAMPLE *SND::s_heartbeat;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
@@ -18,11 +18,11 @@ void SND::load()
 	s_background = _loadSample("sfx/background-c.ogg");
 	s_ambient[0] = _loadSample("sfx/ambient_breath1.ogg");
 	s_ambient[1] = _loadSample("sfx/ambient_breath2.ogg");
-	//s_ambient[2] = _loadSample("sfx/ambient_scream.ogg");
-	//s_ambient[3] = _loadSample("sfx/ambient_texture1.ogg");
-	//s_ambient[4] = _loadSample("sfx/ambient_texture2.ogg");
-	//s_ambient[5] = _loadSample("sfx/ambient_wind.ogg");
+	s_ambient[2] = _loadSample("sfx/ambient1.ogg");
 	s_heartbeat = _loadSample("sfx/heartbeat.ogg");
+
+	i_treble = al_create_sample_instance(_loadSample("sfx/hightremolo.ogg"));
+	al_attach_sample_instance_to_mixer(i_treble, al_get_default_mixer());
 }
 
 // obertöne: E D C B A
@@ -62,4 +62,18 @@ void SND::heartbeat() {
 void SND::ambient(int type) {
 	if (type > 2 || type < 0) type = 0;
 	al_play_sample(s_ambient[type], 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+void SND::startLoopedAmbient(void) {
+	al_play_sample(s_ambient[2], 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
+}
+
+void SND::startLoopedTreble(void) {
+	al_set_sample_instance_gain(i_treble, 0.0);
+	al_set_sample_instance_playmode(i_treble, ALLEGRO_PLAYMODE_LOOP);
+	al_play_sample_instance(i_treble);
+}
+
+void SND::setLoopedTrepleGain(float gain) {
+	al_set_sample_instance_gain(i_treble, 0.0);
 }

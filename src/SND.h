@@ -12,11 +12,16 @@ class SND
 		static void background(int pitch);
 		static void heartbeat();
 		static void ambient(int type);
+		static void startLoopedAmbient(void);
+		static void startLoopedTreble(void);
+		static void SND::setLoopedTrepleGain(float gain);
 	protected:
 		static ALLEGRO_SAMPLE* s_whistle;
 		static ALLEGRO_SAMPLE* s_background;
 		static ALLEGRO_SAMPLE* s_heartbeat;
 		static ALLEGRO_SAMPLE* s_ambient[];
+
+		static ALLEGRO_SAMPLE_INSTANCE* i_treble;
 	private:
 		SND() {}
 		~SND() {}

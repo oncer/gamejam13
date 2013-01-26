@@ -102,6 +102,11 @@ void Game::run(void)
 
 	int frame_counter = 0;
 
+
+	//start allegro looped ambients
+	SND::startLoopedAmbient();
+	SND::startLoopedTreble();
+
     while (running)
     {
         ALLEGRO_EVENT ev;

@@ -2,7 +2,7 @@
 
 Ambient::Ambient(void)
 	: frame_counter(0)
-{
+{	
 	setNextDelay();
 }
 Ambient::~Ambient(void) {
