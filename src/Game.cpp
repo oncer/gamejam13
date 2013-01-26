@@ -102,26 +102,31 @@ void Game::run(void)
 
 	int frame_counter = 0;
 
-	while (running)
-	{
-		ALLEGRO_EVENT ev;
-		bool keydown = false;
-		while (!al_is_event_queue_empty(input_queue)) {
-			al_wait_for_event(input_queue, &ev);
-			if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
-				keydown = true;
-				if (ev.keyboard.keycode == ALLEGRO_KEY_P) {
-					step_by_step = !step_by_step;
-				}
-			} else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
-				running = false;
-			}
-		}
-		al_wait_for_event(refresh_queue, &ev);
-		if (!paused && ((step_by_step && keydown) ||
-					(!step_by_step && ev.type == ALLEGRO_EVENT_TIMER))) {
-			redraw = true;
-			frames_fired++;
+
+	//start allegro looped ambients
+	SND::startLoopedAmbient();
+	SND::startLoopedTreble();
+
+    while (running)
+    {
+        ALLEGRO_EVENT ev;
+        bool keydown = false;
+        while (!al_is_event_queue_empty(input_queue)) {
+            al_wait_for_event(input_queue, &ev);
+            if (ev.type == ALLEGRO_EVENT_KEY_DOWN) {
+                keydown = true;
+                if (ev.keyboard.keycode == ALLEGRO_KEY_P) {
+                    step_by_step = !step_by_step;
+                }
+            } else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+                running = false;
+            }
+        }
+        al_wait_for_event(refresh_queue, &ev);
+        if (!paused && ((step_by_step && keydown) ||
+                    (!step_by_step && ev.type == ALLEGRO_EVENT_TIMER))) {
+            redraw = true;
+            frames_fired++;
 
 			// GAME LOGIC
 			if (!gameover) {

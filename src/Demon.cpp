@@ -42,20 +42,29 @@ void Demon::update(void){
 	}
 	*/
 
-
+	
 	int pxpos = pos.x>>FPSH;
+
+	//SET TREBLE LOOP VOLUME
+	//map from [50,320] to [1, 0]
+	float gain = ((float)(320-pxpos)/270);
+	gain *= gain*gain; //^3
+	SND::setLoopedTrepleGain(gain);
+	
+
+	//SET FILTERS
 	if (pxpos < 100) {
 		//map from [50, 100] to [1, 0] to [255, 0]
 		int opacity;
 		if (pxpos <= 50) {
 			opacity = 255;
 			g_game->setGameover(true);
+			SND::stopLoopedTreble();
 		} else opacity = (int) (255 * ((double)(100-pxpos))/50);
 
 		FilterDark& filter = g_game->getFilterDark();
 
 		filter.setOpacity(opacity);
-
 	}
 }
 

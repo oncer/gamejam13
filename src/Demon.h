@@ -25,5 +25,5 @@ protected:
 	void setState(State _state);
 
 	static const int max_velocity = -160;
-	static const int min_velocity = -4;
+	static const int min_velocity = 0;
 };
