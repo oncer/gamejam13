@@ -14,6 +14,8 @@ class Note :
 		void respawn(int _pitch);
 		bool isAlive(void);
 
+		int getPitch() const { return pitch; }
+
 	protected:
 		static const int pos_max_x = 380;
 		static const int pos_min_x = 20;
