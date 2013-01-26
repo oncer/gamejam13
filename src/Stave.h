@@ -4,6 +4,7 @@ class Stave :
 	public Sprite
 {
 public:
+
 	Stave(void);
 	~Stave(void);
 	

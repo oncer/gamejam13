@@ -39,9 +39,9 @@ void Player::update(void) {
 	Sprite::update();
 
 	//handle keypress
-	if(KBD::JustPressed(KBD::KEY_DOWN) && state != PUMP) { //just pressed key and state not yet set
+	if(KBD::JustPressed(KBD::KEY_ACTION) && state != PUMP) { //just pressed key and state not yet set
 		setState(PUMP);
-	} else if( ! KBD::IsKeyPressed(KBD::KEY_DOWN) && state != IDLE ) { //released key and state not yet set
+	} else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
 		setState(IDLE);
 	}
 
