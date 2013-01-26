@@ -1,5 +1,6 @@
 #include "ParticleEmitter.h"
 #include "Define.h"
+#include "Globals.h"
 
 ParticleEmitter::ParticleEmitter()
     :particles(MAX_PARTICLES)
@@ -9,30 +10,27 @@ ParticleEmitter::ParticleEmitter()
 void ParticleEmitter::addEffect(EffectType effect, const point &pos)
 {
     int i, len;
-    switch (effect) {
-    case EFFECT_AIRJUMP:
-    {
-        Particle* p = addParticle(Particle::AIRJUMP);
-        if (p != NULL) {
-            p->setCenter(pos);
-        }
-    }
-        break;
-    case EFFECT_DEATH:
-    {
-        len = randint(4,7);
-        for (i=0; i<len; i++) {
-            Particle* p = addParticle(Particle::SMOKE);
-            if (p != NULL) {
-                p->setCenter(pos);
-                point dir = {randint(-1024, 1024), randint(-1024, 256)};
-                point v = motion_vector(dir, PX/2);
-                p->setVelocity(v.x, v.y);
-            }
-        }
-        break;
-    }
-    }
+	switch (effect) {
+		case EFFECT_BLOODSQUIRT:
+			{
+				len = randint(14,28);
+				for (i=0; i<len; i++) {
+					Particle* p;
+					if (i < 20) {
+						p = addParticle(Particle::BLOOD_SMALL);
+					} else {
+						p = addParticle(Particle::BLOOD_BIG);
+					}
+					if (p != NULL) {
+						p->setCenter(pos);
+						point dir = {randint(-PX/2, PX/2), randint(-PX, 0)};
+						p->setVelocity(dir.x, dir.y);
+						p->setAcceleration(0, PX/16); // gravity
+					}
+				}
+				break;
+			}
+	}
 }
 
 Particle* ParticleEmitter::addParticle(Particle::ParticleType particleType)
@@ -66,38 +64,43 @@ void ParticleEmitter::draw() const
 void Particle::init(ParticleType type)
 {
     Sprite::reset();
+	this->type = type;
     maxVelocity.x = maxVelocity.y = 16<<FPSH; // sufficiently large value
-	velocity.y = PX;
     int i;
     switch (type) {
-    case AIRJUMP:
-        for (i=0; i<5; i++) {
-            add_sprite_rect("effects", i*32, 16, 32, 16);
-        }
-        display_offset.x = display_offset.y = 0;
-        pos.w = 32<<FPSH;
-        pos.h = 16<<FPSH;
-        anim_delay = anim_wait = 2;
-        alive = true;
-        collisionResponse = false;
-        break;
-    case SMOKE:
-        for (i=0; i<7; i++) {
-            add_sprite_rect("effects", i*16, 0, 16, 16);
-        }
-        display_offset.x = display_offset.y = -4;
-        pos.w = pos.h = 8<<FPSH;
-        anim_delay = randint(2, 6);
-        anim_wait = anim_delay * randint(1, 2);
-        alive = true;
-        collisionResponse = false;
-        break;
-    }
+		case BLOOD_BIG:
+			for (i=0; i<7; i++) {
+				add_sprite_rect("blood", i*4, 32, 8, 8);
+			}
+			display_offset.x = display_offset.y = -2;
+			pos.w = pos.h = 4<<FPSH;
+			anim_delay = randint(4,8);
+			anim_wait = anim_delay * randint(1, 2);
+			alive = true;
+			collisionResponse = false;
+			break;
+		case BLOOD_SMALL:
+		{
+			s32 bloodtype = randint(0,4);
+			for (i=0; i<4; i++) {
+				add_sprite_rect("blood", i*4, bloodtype*4, 4, 4);
+			}
+			display_offset.x = display_offset.y = -1;
+			pos.w = pos.h = 2<<FPSH;
+			anim_delay = randint(8, 12);
+			anim_wait = anim_delay * randint(1, 3);
+			alive = true;
+			collisionResponse = false;
+			break;
+		}
+	}
 }
 
 void Particle::update()
 {
+	ParticleEmitter& emitter = g_game->getParticles();
     Sprite::update();
+	rotation = fp_atan2(velocity);
     anim_wait--;
     if (anim_wait < 0) {
         anim_wait = anim_delay;
@@ -105,6 +108,13 @@ void Particle::update()
         if (cur_frame >= sprite_rects.size()) {
             alive = false;
         }
+		if (type == BLOOD_BIG) {
+			Particle* p = emitter.addParticle(BLOOD_SMALL);
+			if (p != NULL) {
+				p->setCenter(getCenter());
+				p->setAcceleration(0, PX/16);
+			}
+		}
     }
 }
 

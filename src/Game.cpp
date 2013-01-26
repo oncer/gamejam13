@@ -2,6 +2,7 @@
 #include "Define.h"
 #include "GFX.h"
 #include "KBD.h"
+#include "SND.h"
 
 Game::Game(void) :
     timer(NULL),
@@ -47,6 +48,7 @@ void Game::run(void)
     if (!al_install_audio()) {
         throw std::runtime_error("failed to initialize audio!\n");
     }
+	al_reserve_samples(128);
 
     if (!al_install_keyboard()) {
         throw std::runtime_error("failed to initialize keyboard!\n");
@@ -81,6 +83,7 @@ void Game::run(void)
     al_register_event_source(refresh_queue, al_get_timer_event_source(timer));
 
     GFX::init();
+	SND::load();
     // initialization here
 
     al_start_timer(timer);
@@ -91,6 +94,7 @@ void Game::run(void)
     frames_fired = frames_drawn = 0;
     int fps = 0;
     bool running = true;
+	frameID = 0;
     while (running)
     {
         ALLEGRO_EVENT ev;
@@ -114,10 +118,20 @@ void Game::run(void)
 
             // GAME LOGIC
             KBD::Update();
+			frameID++;
+			if (frameID % 60 == 0) {
+				SND::whistle(2);
+			}
 
 			song.update();
 			song.updateNotes();
 
+			particles.update();
+
+			if (frameID % FPS == 0) {
+				point pos = {100<<FPSH, 100<<FPSH};
+				particles.addEffect(EFFECT_BLOODSQUIRT, pos);
+			}
 			player.update();
 
 			// END OF GAME LOGIC
@@ -134,6 +148,8 @@ void Game::run(void)
 
           //  stave.draw();
 			song.drawNotes();
+
+			particles.draw();
 
 			//END OF DRAW SPRITES
 

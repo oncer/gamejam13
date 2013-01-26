@@ -5,6 +5,7 @@
 #include "Stave.h"
 #include "Background.h"
 #include "Song.h"
+#include "ParticleEmitter.h"
 #include "Player.h"
 
 class Game
@@ -16,12 +17,19 @@ class Game
         void pause(bool enabled);
         void run(void);
 
+		s32 getCurrentFrameID() { return frameID; }
+
+		ParticleEmitter& getParticles() { return particles; }
+
     protected:
         ALLEGRO_TIMER* timer;
 
 		//Stave stave;
 		Background background;
 		Song song;
+		ParticleEmitter particles;
+
+		s32 frameID;
 		Player player;
 
         bool paused;
