@@ -2,6 +2,7 @@
 
 ALLEGRO_SAMPLE *SND::s_whistle;
 ALLEGRO_SAMPLE *SND::s_background[] = {NULL, NULL, NULL};
+ALLEGRO_SAMPLE *SND::s_heartbeat;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
 	ALLEGRO_SAMPLE *s = al_load_sample(f);
@@ -15,6 +16,7 @@ void SND::load()
 	s_background[0] = _loadSample("sfx/background-f.ogg");
 	s_background[1] = _loadSample("sfx/background-g.ogg");
 	s_background[2] = _loadSample("sfx/background-a.ogg");
+	s_heartbeat = _loadSample("sfx/heartbeat.ogg");
 }
 
 // obertöne: E D C B A
@@ -41,3 +43,6 @@ void SND::background(int pitch)
 	}
 }
 
+void SND::heartbeat() {
+	al_play_sample(s_heartbeat, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}

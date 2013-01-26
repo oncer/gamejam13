@@ -46,6 +46,7 @@ void Player::update(void) {
 		point effectPos = {pos.x + 47*PX, pos.y + 19*PX};
 		particles.addEffect(EFFECT_BLOODSQUIRT, effectPos);
 		stave.startPulse();
+		SND::heartbeat();
 	}
 	
 	//else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
