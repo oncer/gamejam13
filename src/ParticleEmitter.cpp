@@ -107,12 +107,11 @@ void Particle::update()
         cur_frame++;
         if (cur_frame >= sprite_rects.size()) {
             alive = false;
-        }
-		if (type == BLOOD_BIG) {
+        } else if (type == BLOOD_BIG) {
 			Particle* p = emitter.addParticle(BLOOD_SMALL);
 			if (p != NULL) {
 				p->setCenter(getCenter());
-				p->setAcceleration(0, PX/16);
+				p->setAcceleration(0, PX/8);
 			}
 		}
     }

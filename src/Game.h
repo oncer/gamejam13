@@ -20,11 +20,12 @@ class Game
 		s32 getCurrentFrameID() { return frameID; }
 
 		ParticleEmitter& getParticles() { return particles; }
+		Stave& getStave() { return stave; }
 
     protected:
         ALLEGRO_TIMER* timer;
 
-		//Stave stave;
+		Stave stave;
 		Background background;
 		Song song;
 		ParticleEmitter particles;
