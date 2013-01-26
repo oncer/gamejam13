@@ -15,7 +15,12 @@ public:
         KEY_LEFT   = 0x04,
         KEY_RIGHT  = 0x08,
         KEY_UP     = 0x10,
-        KEY_DOWN   = 0x20
+        KEY_DOWN   = 0x20,
+        KEY_NOTE1   = 0x40,
+        KEY_NOTE2   = 0x80,
+        KEY_NOTE3   = 0x100,
+        KEY_NOTE4   = 0x200,
+        KEY_NOTE5   = 0x400
     };
 private:
     static ALLEGRO_KEYBOARD_STATE kbd_state;

@@ -4,6 +4,7 @@ ALLEGRO_SAMPLE *SND::s_whistle;
 ALLEGRO_SAMPLE *SND::s_background;
 ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL, NULL};
 ALLEGRO_SAMPLE *SND::s_heartbeat;
+ALLEGRO_SAMPLE_INSTANCE *SND::i_treble;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
 	ALLEGRO_SAMPLE *s = al_load_sample(f);
@@ -75,5 +76,9 @@ void SND::startLoopedTreble(void) {
 }
 
 void SND::setLoopedTrepleGain(float gain) {
-	al_set_sample_instance_gain(i_treble, 0.0);
+	al_set_sample_instance_gain(i_treble, gain);
+}
+
+void SND::stopLoopedTreble(void) {
+	al_stop_sample_instance(i_treble);
 }
