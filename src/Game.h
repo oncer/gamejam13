@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Demon.h"
 #include "FilterDark.h"
+#include "FilterFilm.h"
 
 class Game
 {
@@ -30,6 +31,7 @@ class Game
 		//Stave stave;
 		Background background;
 		FilterDark filterDark;
+		FilterFilm filterFilm;
 		Song song;
 		ParticleEmitter particles;
 

@@ -134,6 +134,7 @@ void Game::run(void)
 			}
 			player.update();
 			demon.update();
+			filterFilm.update();
 
 			// END OF GAME LOGIC
         }
@@ -154,6 +155,7 @@ void Game::run(void)
 			particles.draw();
 
 			//filters
+			filterFilm.draw();
 			filterDark.draw();
 
 

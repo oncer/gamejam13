@@ -33,10 +33,10 @@ void Demon::update(void){
 		}
 	}
 
-	if(KBD::JustPressed(KBD::KEY_DOWN) && state != HAPPY) {
+	if(KBD::IsKeyPressed(KBD::KEY_DOWN)) {
 		happy();
 	}
-	if(KBD::JustPressed(KBD::KEY_UP) && state != HURT) {
+	if(KBD::IsKeyPressed(KBD::KEY_UP)) {
 		hurt();
 	}
 
@@ -52,8 +52,6 @@ void Demon::update(void){
 		FilterDark& filter = g_game->getFilterDark();
 
 		filter.setOpacity(opacity);
-
-		std::cout<<"opacity: " << opacity<<std::endl;
 
 	}
 }
