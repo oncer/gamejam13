@@ -5,6 +5,7 @@
 #include "Stave.h"
 #include "Background.h"
 #include "Song.h"
+#include "Player.h"
 
 class Game
 {
@@ -18,9 +19,10 @@ class Game
     protected:
         ALLEGRO_TIMER* timer;
 
-		Stave stave;
+		//Stave stave;
 		Background background;
 		Song song;
+		Player player;
 
         bool paused;
 };

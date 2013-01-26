@@ -6,7 +6,7 @@
 Game::Game(void) :
     timer(NULL),
     paused(false),
-	song("a7c7h7e7")
+	song("a7c7h7e7d7")
 {
 }
 
@@ -118,6 +118,8 @@ void Game::run(void)
 			song.update();
 			song.updateNotes();
 
+			player.update();
+
 			// END OF GAME LOGIC
         }
 
@@ -127,8 +129,10 @@ void Game::run(void)
 
 			// DRAW SPRITES
             background.draw();
-            stave.draw();
-			
+
+			player.draw();
+
+          //  stave.draw();
 			song.drawNotes();
 
 			//END OF DRAW SPRITES
