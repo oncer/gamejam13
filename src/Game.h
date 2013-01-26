@@ -14,11 +14,15 @@ class Game
         void pause(bool enabled);
         void run(void);
 
+		s32 getCurrentFrameID() { return frameID; }
+
     protected:
         ALLEGRO_TIMER* timer;
 
 		Stave stave;
 		Background background;
+
+		s32 frameID;
 
         bool paused;
 };

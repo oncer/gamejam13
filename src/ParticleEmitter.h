@@ -3,12 +3,14 @@
 #include "sdk.h"
 #include "Sprite.h"
 
+class ParticleEmitter;
+
 class Particle: public Sprite
 {
 public:
     enum ParticleType {
-        SMOKE,
-        AIRJUMP
+        BLOOD_BIG,
+		BLOOD_SMALL
     };
 
     Particle();
@@ -28,14 +30,15 @@ public:
     }
     void setFlip(bool h_flip, bool v_flip) { this->h_flip = h_flip; this->v_flip = v_flip; }
 private:
+	ParticleType type;
     bool alive;
     s32 anim_wait;
     s32 anim_delay;
 };
 
 enum EffectType {
-    EFFECT_DEATH,
-    EFFECT_AIRJUMP
+    EFFECT_BLOODSQUIRT,
+	EFFECT_BLOODDROP
 };
 
 class ParticleEmitter

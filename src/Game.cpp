@@ -2,6 +2,7 @@
 #include "Define.h"
 #include "GFX.h"
 #include "KBD.h"
+#include "SND.h"
 
 Game::Game(void) :
     timer(NULL),
@@ -46,6 +47,7 @@ void Game::run(void)
     if (!al_install_audio()) {
         throw std::runtime_error("failed to initialize audio!\n");
     }
+	al_reserve_samples(128);
 
     if (!al_install_keyboard()) {
         throw std::runtime_error("failed to initialize keyboard!\n");
@@ -80,6 +82,7 @@ void Game::run(void)
     al_register_event_source(refresh_queue, al_get_timer_event_source(timer));
 
     GFX::init();
+	SND::load();
     // initialization here
 
     al_start_timer(timer);
@@ -90,6 +93,7 @@ void Game::run(void)
     frames_fired = frames_drawn = 0;
     int fps = 0;
     bool running = true;
+	frameID = 0;
     while (running)
     {
         ALLEGRO_EVENT ev;
@@ -112,6 +116,10 @@ void Game::run(void)
             frames_fired++;
             // logic here
             KBD::Update();
+			frameID++;
+			if (frameID % 60 == 0) {
+				SND::whistle(2);
+			}
         }
 
         if (redraw && al_is_event_queue_empty(refresh_queue)) {
