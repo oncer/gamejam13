@@ -24,6 +24,11 @@ void Song::update(void) {
 	frame_counter++;
 	if(frame_counter >= frames_per_16beat) {
 		//Beat
+		beat_counter++;
+		if(beat_counter >= 4) {
+			SND::timbal();
+			beat_counter = 0;
+		}
 
 		frame_counter = 0;
 		if (pause_counter > 0) { //WAIT

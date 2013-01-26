@@ -168,8 +168,8 @@ void Game::run(void)
 			player.draw();
 			demon.draw();
 			song.drawNotes();
-			stave.draw();
 			particles.draw();
+			stave.draw();
 
 			//filters
 			filterDark.draw();

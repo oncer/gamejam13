@@ -15,7 +15,7 @@ class Note :
 		bool isAlive(void);
 
 		int getPitch() const { return pitch; }
-		bool isObstacle() const { return pitch > 4; }
+		bool isObstacle(void) const { return obstacle; }
 
 	protected:
 		static const int pos_max_x = 392;
@@ -24,6 +24,7 @@ class Note :
 		static const int hitpos_min_x = 40;
 
 		bool alive;
+		bool obstacle;
 
 		int pitch;
 

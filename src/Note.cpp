@@ -7,6 +7,7 @@ Note::Note()
 	anim_frame_duration=10;
 	anim_frames = 3;
 	anim = true;
+	obstacle = false;
 }
 
 
@@ -17,6 +18,7 @@ Note::~Note(void)
 void Note::respawn(int _pitch, bool isObstacle) {
 	sprite_rects.clear();
 
+	obstacle = isObstacle;
 	pitch = _pitch;
 
 	//init bitmap
@@ -69,8 +71,20 @@ void Note::update(void){
 			std::cout << "hit note" << std::endl;	
 			alive = false;
 			//g_game->getDemon().hurt(1);
-			point effectPos = {pos.x + 16*PX, pos.y + 15*PX};
-			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, effectPos);
+			EffectType effectType;
+			switch (pitch) {
+				case 0: effectType = EFFECT_NOTE1; break;
+				case 1: effectType = EFFECT_NOTE2; break;
+				case 2: effectType = EFFECT_NOTE3; break;
+				case 3: effectType = EFFECT_NOTE4; break;
+				case 4: effectType = EFFECT_NOTE5; break;
+			}
+			if (obstacle) {
+				g_game->getDemon().happy(64); //obstacle hit
+				//effectType = EFFECT_OBSTACLE;
+			}
+
+			g_game->getParticles().addEffect(effectType, getCenter());
 		}
 	}
 }

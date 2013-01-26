@@ -24,8 +24,9 @@ void Stave::update(void){
 	s32 targetY = 16*PX*4;
 	rotation = fp_atan2(velocity);
 	ParticleEmitter& particles = g_game->getParticles();
-	Particle* p = particles.addParticle(Particle::BLOOD_SMALL);
+	Particle* p = particles.addParticle(Particle::OSCILLO);
 	p->setCenter(getCenter());
+	p->setRotation(rotation);
 
 	point center = getCenter();
 	switch (state) {
@@ -69,6 +70,7 @@ void Stave::update(void){
 			break;
 		case STATE_U:
 			accel.y = PX/2;
+			velocity.x = PX*2;
 			if (center.y > 16*4*PX) {
 				state = STATE_IDLE;
 				accel.y = 0;
