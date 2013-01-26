@@ -5,7 +5,8 @@
 
 Game::Game(void) :
     timer(NULL),
-    paused(false)
+    paused(false),
+	song("a7c7h7e7")
 {
 }
 
@@ -110,17 +111,29 @@ void Game::run(void)
                     (!step_by_step && ev.type == ALLEGRO_EVENT_TIMER))) {
             redraw = true;
             frames_fired++;
-            // logic here
+
+            // GAME LOGIC
             KBD::Update();
+
+			song.update();
+			song.updateNotes();
+
+			// END OF GAME LOGIC
         }
 
         if (redraw && al_is_event_queue_empty(refresh_queue)) {
             frames_drawn++;
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
+			// DRAW SPRITES
             background.draw();
             stave.draw();
+			
+			song.drawNotes();
 
+			//END OF DRAW SPRITES
+
+			//draw fps
             char c_fps[20];
             snprintf(c_fps, 20, "@%d@", fps);
             GFX::text(FONT_DEFAULT, 360, 220, c_fps);

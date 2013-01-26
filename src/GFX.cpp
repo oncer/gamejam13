@@ -31,6 +31,7 @@ void BitmapLib::load()
     LOAD("demon",           "gfx/demon.png");
     LOAD("font0",           "gfx/font.png");
     LOAD("stave",           "gfx/stave.png");
+    LOAD("notes",           "gfx/notes.png");
 
 
     int rng0[] = {32, 127};

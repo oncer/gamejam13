@@ -4,6 +4,7 @@
 #include "sdk.h"
 #include "Stave.h"
 #include "Background.h"
+#include "Song.h"
 
 class Game
 {
@@ -19,6 +20,7 @@ class Game
 
 		Stave stave;
 		Background background;
+		Song song;
 
         bool paused;
 };
