@@ -7,7 +7,7 @@ public:
 	FilterFilm(void);
 	~FilterFilm(void);
 	
-	void FilterFilm::draw(void);
-	void FilterFilm::update(void);
+	void draw(void);
+	void update(void);
 };
 

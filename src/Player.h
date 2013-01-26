@@ -8,8 +8,8 @@ public:
 	Player(void);
 	~Player(void);
 	
-	void Player::update(void);
-	void Player::draw(void);
+	void update(void);
+	void draw(void);
 
 protected:
 	enum States {
@@ -19,6 +19,6 @@ protected:
 
 	States state;
 
-	void Player::setState(States _state);
+	void setState(States _state);
 };
 

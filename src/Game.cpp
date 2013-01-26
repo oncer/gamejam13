@@ -119,20 +119,12 @@ void Game::run(void)
             // GAME LOGIC
             KBD::Update();
 			frameID++;
-			if (frameID % 60 == 0) {
-				SND::whistle(2);
-			}
 
 			song.update();
 			song.updateNotes();
-
-			particles.update();
-
-			if (frameID % FPS == 0) {
-				point pos = {100<<FPSH, 100<<FPSH};
-				particles.addEffect(EFFECT_BLOODSQUIRT, pos);
-			}
 			player.update();
+			stave.update();
+			particles.update();
 			demon.update();
 			filterFilm.update();
 
@@ -152,6 +144,7 @@ void Game::run(void)
           //  stave.draw();
 			song.drawNotes();
 
+			stave.draw();
 			particles.draw();
 
 			//filters

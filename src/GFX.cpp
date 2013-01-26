@@ -30,13 +30,12 @@ void BitmapLib::load()
     LOAD("background",      "gfx/background.png");
     LOAD("demon",           "gfx/demon.png");
     LOAD("font0",           "gfx/font.png");
-    LOAD("stave",           "gfx/stave.png");
+    LOAD("lines",           "gfx/lines.png");
     LOAD("notes",           "gfx/notes.png");
 	LOAD("blood",			"gfx/blood.png");
     LOAD("player",          "gfx/player.png");
     LOAD("filter_dark",     "gfx/filter_dark.png");
     LOAD("filter_film",     "gfx/filter_film.png");
-
 
     int rng0[] = {32, 127};
     font[FONT_DEFAULT] = al_grab_font_from_bitmap(get("font0"), 1, rng0);

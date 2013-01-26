@@ -23,12 +23,13 @@ class Game
 		s32 getCurrentFrameID() { return frameID; }
 
 		ParticleEmitter& getParticles() { return particles; }
+		Stave& getStave() { return stave; }
 		FilterDark& getFilterDark() { return filterDark; }
 
     protected:
         ALLEGRO_TIMER* timer;
 
-		//Stave stave;
+		Stave stave;
 		Background background;
 		FilterDark filterDark;
 		FilterFilm filterFilm;
