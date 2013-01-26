@@ -6,6 +6,7 @@
 #include "Background.h"
 #include "Song.h"
 #include "ParticleEmitter.h"
+#include "Player.h"
 
 class Game
 {
@@ -23,12 +24,13 @@ class Game
     protected:
         ALLEGRO_TIMER* timer;
 
-		Stave stave;
+		//Stave stave;
 		Background background;
 		Song song;
 		ParticleEmitter particles;
 
 		s32 frameID;
+		Player player;
 
         bool paused;
 };

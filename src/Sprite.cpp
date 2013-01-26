@@ -4,7 +4,7 @@
 #include "Define.h"
 
 Sprite::Sprite(void) :
-    sprite_rects(), is_cut(false), cur_frame(0), h_flip(false), v_flip(false)
+    sprite_rects(), is_cut(false), cur_frame(0), h_flip(false), v_flip(false), anim_frame_duration(0), anim(false)
 {
     reset();
 }
@@ -22,6 +22,7 @@ void Sprite::reset()
     display_offset.x = display_offset.y = 0;
     is_cut = false;
     cur_frame = 0;
+	anim_frame_counter = 0;
     h_flip = v_flip = false;
     opacity = 255;
     rotation = 0;
@@ -74,10 +75,21 @@ void Sprite::update_velocity(void)
     if (velocity.y > maxVelocity.y) velocity.y = maxVelocity.y;
 }
 
+void Sprite::update_animation(void)
+{
+	if (anim) {
+		if (anim_frame_counter++ >= anim_frame_duration) {
+			cur_frame = ( cur_frame + 1 ) % anim_frames;
+			anim_frame_counter = 0;
+		}
+	}
+}
+
 void Sprite::update(void)
 {
     update_velocity();
     update_movement();
+    update_animation();
 }
 
 void Sprite::draw(void) const

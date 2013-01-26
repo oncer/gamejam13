@@ -9,7 +9,7 @@ void KBD::Update()
     al_get_keyboard_state(&kbd_state);
     u32 previous_keystate = keystate;
     keystate = 0;
-    if (al_key_down(&kbd_state, ALLEGRO_KEY_A)) keystate |= KEY_JUMP;
+    if (al_key_down(&kbd_state, ALLEGRO_KEY_SPACE)) keystate |= KEY_ACTION;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_S)) keystate |= KEY_ATTACK;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_LEFT)) keystate |= KEY_LEFT;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_RIGHT)) keystate |= KEY_RIGHT;

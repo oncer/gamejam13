@@ -66,12 +66,18 @@ class Sprite
 
         void update_velocity();
         void update_movement();
+		void update_animation();
 
         std::vector<SpriteRect> sprite_rects;
         rect cut_rect;
         bool is_cut;
 
         u32 cur_frame;
+		bool anim;
+		int anim_frames;//how many frames
+		int anim_frame_duration;
+		int anim_frame_counter;
+
         point display_offset;
         u8 opacity;
         s32 rotation;
