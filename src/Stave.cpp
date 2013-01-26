@@ -3,12 +3,14 @@
 #include "Globals.h"
 
 Stave::Stave(void)
-	:pulse(false)
 {
-	add_sprite_rect("lines",0,64,32,32);
-	add_sprite_rect("lines",32,64,32,32);
-	add_sprite_rect("lines",64,64,32,32);
-	add_sprite_rect("lines",96,64,32,32);
+	pos.w = (16<<FPSH);
+	pos.h = (16<<FPSH);
+	display_offset.x = -16;
+	display_offset.y = -16;
+	add_sprite_rect("ghost",0,0,48,48);
+	
+	state = STATE_IDLE;
 }
 
 
@@ -19,96 +21,82 @@ Stave::~Stave(void)
 void Stave::update(void){
 	Sprite::update();
 
-	if (KBD::JustPressed(KBD::KEY_UP)) {
-		selectedPitch--;
-		if (selectedPitch < 0) selectedPitch = 4;
-	}
-	if (KBD::JustPressed(KBD::KEY_DOWN)) {
-		selectedPitch++;
-		if (selectedPitch > 4) selectedPitch = 0;
-	}
-
-	pos.y = (selectedPitch+1)*16*PX;
-
-	if (pulse) {
-		s32 f = (pos.x>>FPSH) / 24;
-		
-		if (f > 7) {
-			stopPulse();
-		} else {
-			switch (f) {
-				case 7: cur_frame = 0; break;
-				case 6: cur_frame = 1; break;
-				case 5: cur_frame = 2; break;
-				case 4: cur_frame = 3; break;
-				case 3: cur_frame = 2; break;
-				case 2: cur_frame = 1; break;
-				case 1: cur_frame = 0; break;
-				case 0: cur_frame = 0; break;
+	s32 targetY = 16*PX*4;
+	rotation = fp_atan2(velocity);
+	ParticleEmitter& particles = g_game->getParticles();
+	Particle* p = particles.addParticle(Particle::BLOOD_SMALL);
+	p->setCenter(getCenter());
+	switch (state) {
+		case STATE_IDLE:
+			velocity.x = PX;
+			velocity.y = (targetY - getCenter().y) / 16;
+			break;
+		case STATE_Q:
+			targetY = 16*PX*9/2;
+			velocity.x = PX;
+			velocity.y = (targetY - getCenter().y) / 8;
+			if (std::abs(targetY - getCenter().y) < PX) {
+				state = STATE_R;
 			}
-		}
+			break;
+		case STATE_R:
+			velocity.x = PX*2;
+			velocity.y = -PX*6;
+			if (pos.y < 16*PX) {
+				pos.y = 16*PX;
+				state = STATE_S;
+			}
+			break;
+		case STATE_S:
+			velocity.x = PX;
+			velocity.y = PX*6;
+			if (pos.y > 16*6*PX) {
+				pos.y = 16*6*PX;
+				state = STATE_T;
+			}
+			break;
+		case STATE_T:
+			velocity.x = PX*2;
+			velocity.y = -PX*6;
+			if (pos.y < 16*3*PX) {
+				pos.y = 16*3*PX;
+				state = STATE_U;
+				velocity.y = -PX*2;
+			}
+			break;
+		case STATE_U:
+			accel.y = PX/2;
+			if (pos.y > 16*3*PX) {
+				state = STATE_IDLE;
+				accel.y = 0;
+			}
+			break;
+	}
+	if ((pos.x + pos.w) > (WIDTH<<FPSH)) {
+		pos.x = -pos.w;
 	}
 }
 
 void Stave::draw(void)
 {
-	rect rcLine;
-	if ((g_game->getCurrentFrameID()/8)%2 == 0) {
-		rect r = {0, 0, 400, 32};
-		rcLine = r;
-	} else {
-		rect r = {0, 32, 400, 32};
-		rcLine = r;
-	}
-
-	if (pulse) {
-		if (pos.x > 0) {
-			rcLine.w = pos.x>>FPSH;
-			GFX::blit("lines", rcLine, 0, (pos.y>>FPSH));
-		}
-		rcLine.x = (pos.x + pos.w)>>FPSH;
-	}
-	rcLine.w = 400 - rcLine.x;
-	if (rcLine.w > 400) rcLine.w = 400;
-	GFX::blit("lines", rcLine, rcLine.x, (pos.y>>FPSH));
-
-	if (pulse) {
-		Sprite::draw();
-	}
+	s32 displaceY = fp_sin(g_game->getCurrentFrameID()*PX*8)*2;
+	pos.y += displaceY;
+	Sprite::draw();
+	pos.y -= displaceY;
 }
 
 void Stave::startPulse(void)
 {
-	pulse = true;
-	pos.x = -pos.w;
-	velocity.x = PX*6;
-}
-
-void Stave::stopPulse(void)
-{
-	pulse = false;
-	pos.x = -pos.w;
-	velocity.x = 0;
-}
-
-int Stave::hitNote(const Note& note)
-{
-	if (selectedPitch != note.getPitch()) {
-		return HIT_NONE;
+	if (state == STATE_IDLE) {
+		state = STATE_Q;
 	}
-
-	s32 noteX = note.getCenter().x;
-
-	s32 curX = get_center(pos).x;
-	s32 oldX = curX - velocity.x + note.getVelocity().x;
-
-	if (oldX < noteX && curX >= noteX) {
-		stopPulse();
-		if (cur_frame == 0) return HIT_BAD;
-		else if (cur_frame == 1 || cur_frame == 2) return HIT_GOOD;
-		else if (cur_frame == 3) return HIT_PERFECT;
-	}
-	return HIT_NONE;
 }
 
+bool Stave::hitNote(const Note& note)
+{
+	const rect& notePos = note.getPosition();
+	rect noteRect = {notePos.x + (8<<FPSH), notePos.y + (10<<FPSH), (14<<FPSH), (12<<FPSH)};
+	rect coll = get_collision(pos, noteRect);
+	return is_collision(coll);
+}
 

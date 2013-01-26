@@ -34,6 +34,7 @@ void BitmapLib::load()
     LOAD("notes",           "gfx/notes.png");
 	LOAD("blood",			"gfx/blood.png");
     LOAD("player",          "gfx/player.png");
+	LOAD("ghost",			"gfx/ghost.png");
     LOAD("filter_dark",     "gfx/filter_dark.png");
     LOAD("filter_film",     "gfx/filter_film.png");
 

@@ -8,10 +8,12 @@ class Stave :
 {
 public:
 	enum {
-		HIT_NONE = 0,
-		HIT_BAD = 1,
-		HIT_GOOD = 2,
-		HIT_PERFECT = 3
+		STATE_IDLE,
+		STATE_Q,
+		STATE_R,
+		STATE_S,
+		STATE_T,
+		STATE_U
 	};
 
 	Stave(void);
@@ -21,15 +23,12 @@ public:
 	void draw(void);
 
 	void startPulse(void);
-	void stopPulse(void);
+	bool isReady(void) { return state == STATE_IDLE; }
 
-	bool isReady(void) { return !pulse; }
-
-	// returns hit score, 0=nothing, 1=bad, 2=good, 3=perfect
-	int hitNote(const Note& note);
+	bool hitNote(const Note& note);
 
 protected:
-	bool pulse;
+	s32 state;
 	s32 selectedPitch;
 };
 

@@ -40,7 +40,7 @@ void Player::update(void) {
 
 	//handle keypress
 	Stave& stave = g_game->getStave();
-	if(stave.isReady() && KBD::JustPressed(KBD::KEY_ACTION) && state != PUMP) { //just pressed key and state not yet set
+	if (stave.isReady() && state != PUMP && KBD::JustPressed(KBD::KEY_ACTION)) {
 		setState(PUMP);
 		ParticleEmitter& particles = g_game->getParticles();
 		point effectPos = {pos.x + 47*PX, pos.y + 19*PX};

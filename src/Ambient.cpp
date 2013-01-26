@@ -1,4 +1,4 @@
-#include "ambient.h"
+#include "Ambient.h"
 
 Ambient::Ambient(void)
 	: frame_counter(0)
