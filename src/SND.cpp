@@ -2,6 +2,7 @@
 
 ALLEGRO_SAMPLE *SND::s_whistle;
 ALLEGRO_SAMPLE *SND::s_background[] = {NULL, NULL, NULL};
+ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL, NULL, NULL, NULL, NULL};
 ALLEGRO_SAMPLE *SND::s_heartbeat;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
@@ -19,6 +20,12 @@ void SND::load()
 	s_background[0] = _loadSample("sfx/background-f.ogg");
 	s_background[1] = _loadSample("sfx/background-g.ogg");
 	s_background[2] = _loadSample("sfx/background-a.ogg");
+	s_ambient[0] = _loadSample("sfx/ambient_breath1.ogg");
+	s_ambient[1] = _loadSample("sfx/ambient_breath2.ogg");
+	s_ambient[2] = _loadSample("sfx/ambient_scream.ogg");
+	s_ambient[3] = _loadSample("sfx/ambient_texture1.ogg");
+	s_ambient[4] = _loadSample("sfx/ambient_texture2.ogg");
+	s_ambient[5] = _loadSample("sfx/ambient_wind.ogg");
 	s_heartbeat = _loadSample("sfx/heartbeat.ogg");
 }
 
@@ -48,4 +55,9 @@ void SND::background(int pitch)
 
 void SND::heartbeat() {
 	al_play_sample(s_heartbeat, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+}
+
+void SND::ambient(int type) {
+	if (type > 5 || type < 0) type = 0;
+	al_play_sample(s_ambient[type], 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }

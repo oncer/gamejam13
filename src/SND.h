@@ -11,10 +11,12 @@ class SND
 		// untertöne: 0=F 1=G 2=A
 		static void background(int pitch);
 		static void heartbeat();
+		static void ambient(int type);
 	protected:
 		static ALLEGRO_SAMPLE* s_whistle;
 		static ALLEGRO_SAMPLE* s_background[];
 		static ALLEGRO_SAMPLE* s_heartbeat;
+		static ALLEGRO_SAMPLE* s_ambient[];
 	private:
 		SND() {}
 		~SND() {}
