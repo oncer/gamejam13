@@ -5,9 +5,9 @@
 Stave::Stave(void)
 {
 	pos.w = (16<<FPSH);
-	pos.h = (16<<FPSH);
+	pos.h = (14<<FPSH);
 	display_offset.x = -16;
-	display_offset.y = -16;
+	display_offset.y = -17;
 	add_sprite_rect("ghost",0,0,48,48);
 	
 	state = STATE_IDLE;
@@ -26,23 +26,26 @@ void Stave::update(void){
 	ParticleEmitter& particles = g_game->getParticles();
 	Particle* p = particles.addParticle(Particle::BLOOD_SMALL);
 	p->setCenter(getCenter());
+
+	point center = getCenter();
 	switch (state) {
 		case STATE_IDLE:
+			combo = 0;
 			velocity.x = PX;
-			velocity.y = (targetY - getCenter().y) / 16;
+			velocity.y = (targetY - center.y) / 16;
 			break;
 		case STATE_Q:
-			targetY = 16*PX*9/2;
+			targetY = 16*PX*5;
 			velocity.x = PX;
-			velocity.y = (targetY - getCenter().y) / 8;
-			if (std::abs(targetY - getCenter().y) < PX) {
+			velocity.y = (targetY - center.y) / 4;
+			if (std::abs(targetY - center.y) < PX) {
 				state = STATE_R;
 			}
 			break;
 		case STATE_R:
 			velocity.x = PX*2;
 			velocity.y = -PX*6;
-			if (pos.y < 16*PX) {
+			if (center.y < 16*PX*2) {
 				pos.y = 16*PX;
 				state = STATE_S;
 			}
@@ -50,23 +53,23 @@ void Stave::update(void){
 		case STATE_S:
 			velocity.x = PX;
 			velocity.y = PX*6;
-			if (pos.y > 16*6*PX) {
-				pos.y = 16*6*PX;
+			if (center.y > 16*6*PX) {
+				pos.y = 16*6*PX - pos.h/2;
 				state = STATE_T;
 			}
 			break;
 		case STATE_T:
 			velocity.x = PX*2;
 			velocity.y = -PX*6;
-			if (pos.y < 16*3*PX) {
-				pos.y = 16*3*PX;
+			if (center.y < 16*4*PX) {
+				pos.y = 16*4*PX - pos.h/2;
 				state = STATE_U;
 				velocity.y = -PX*2;
 			}
 			break;
 		case STATE_U:
 			accel.y = PX/2;
-			if (pos.y > 16*3*PX) {
+			if (center.y > 16*4*PX) {
 				state = STATE_IDLE;
 				accel.y = 0;
 			}
@@ -74,6 +77,11 @@ void Stave::update(void){
 	}
 	if ((pos.x + pos.w) > (WIDTH<<FPSH)) {
 		pos.x = -pos.w;
+	}
+
+	if (combo > 0 && state == STATE_IDLE) {
+		std::cout << "combo: " << combo << std::endl;
+		combo = 0;
 	}
 }
 
@@ -94,9 +102,12 @@ void Stave::startPulse(void)
 
 bool Stave::hitNote(const Note& note)
 {
-	const rect& notePos = note.getPosition();
-	rect noteRect = {notePos.x + (8<<FPSH), notePos.y + (10<<FPSH), (14<<FPSH), (12<<FPSH)};
+	const rect& noteRect = note.getPosition();
 	rect coll = get_collision(pos, noteRect);
-	return is_collision(coll);
+	bool hit = is_collision(coll);
+	if (hit) {
+		combo++;
+	}
+	return hit;
 }
 

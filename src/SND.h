@@ -14,7 +14,7 @@ class SND
 		static void ambient(int type);
 		static void startLoopedAmbient(void);
 		static void startLoopedTreble(void);
-		static void SND::setLoopedTrepleGain(float gain);
+		static void setLoopedTrepleGain(float gain);
 		static void stopLoopedTreble(void);
 	protected:
 		static ALLEGRO_SAMPLE* s_whistle;

@@ -17,8 +17,8 @@ class Note :
 		int getPitch() const { return pitch; }
 
 	protected:
-		static const int pos_max_x = 380;
-		static const int pos_min_x = 20;
+		static const int pos_max_x = 392;
+		static const int pos_min_x = 8;
 		static const int hitpos_max_x = 60;
 		static const int hitpos_min_x = 40;
 
