@@ -35,6 +35,7 @@ void ParticleEmitter::addEffect(EffectType effect, const point &pos)
 		case EFFECT_NOTE3:
 		case EFFECT_NOTE4:
 		case EFFECT_NOTE5:
+		case EFFECT_OBSTACLE:
 			{
 				Particle::ParticleType particleType;
 				if (effect == EFFECT_NOTE1) particleType = Particle::NOTE1;
@@ -42,6 +43,7 @@ void ParticleEmitter::addEffect(EffectType effect, const point &pos)
 				else if (effect == EFFECT_NOTE3) particleType = Particle::NOTE3;
 				else if (effect == EFFECT_NOTE4) particleType = Particle::NOTE4;
 				else if (effect == EFFECT_NOTE5) particleType = Particle::NOTE5;
+				else if (effect == EFFECT_OBSTACLE) particleType = Particle::OBSTACLE;
 				len = randint(20,30);
 				for (i=0; i<len; i++) {
 					Particle* p = addParticle(particleType);
@@ -95,7 +97,7 @@ void Particle::init(ParticleType type)
 	autorotate = true;
 			
     int i;
-	if (type == NOTE1 || type == NOTE2 || type == NOTE3 || type == NOTE4 || type == NOTE5) {
+	if (type == NOTE1 || type == NOTE2 || type == NOTE3 || type == NOTE4 || type == NOTE5 || type == OBSTACLE) {
 		display_offset.x = display_offset.y = -4;
 		pos.w = pos.h = 1<<FPSH;
 		anim_wait = 16;
@@ -186,6 +188,13 @@ void Particle::init(ParticleType type)
 			add_sprite_rect("particles",16, 48, 8, 8);
 			add_sprite_rect("particles",24, 48, 8, 8);
 			break;
+		}
+		case OBSTACLE:
+		{
+			add_sprite_rect("particles", 0, 56, 8, 8);
+			add_sprite_rect("particles", 8, 56, 8, 8);
+			add_sprite_rect("particles",16, 56, 8, 8);
+			add_sprite_rect("particles",24, 56, 8, 8);
 		}
 	}
 }
