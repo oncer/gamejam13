@@ -37,7 +37,6 @@ void SND::whistle(int pitch)
 		4186.0/4186.0, // C (was C)
 		3951.0/4186.0, // B (was B)
 		3729.0/4186.0 // A# (was A)
-
 	};
 	/*
 	const float pitch_table[] = {
@@ -57,11 +56,11 @@ void SND::whistle(int pitch)
 void SND::hitnote(int pitch)
 {
 	const float pitch_table[] = {
-		5274.0/4186.0, // E
-		4699.0/4186.0, // D
-		4186.0/4186.0, // C
-		3951.0/4186.0, // B
-		3520.0/4186.0  // A
+		4699.0/4186.0,  // D (was E)
+		4435.0/4186.0, // C# (was D)
+		4186.0/4186.0, // C (was C)
+		3951.0/4186.0, // B (was B)
+		3729.0/4186.0 // A# (was A)
 	};
 
 	if (pitch >= 0 && pitch < 5) {
