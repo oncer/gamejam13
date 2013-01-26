@@ -7,7 +7,7 @@
 Game::Game(void) :
     timer(NULL),
     paused(false),
-	song("a7c7h7e7d7")
+	song("e78d78e78c7d7e78a7h7a788c7a78d7e78h78a7c78e78c7a78h7a7a78c788d7")
 {
 }
 
