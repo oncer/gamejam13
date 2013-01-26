@@ -9,6 +9,7 @@ static ALLEGRO_SAMPLE* _loadSample(const char* f) {
 	if (s == NULL) {
 		std::cout << "[error] Could not load " << f << std::endl;
 	}
+	return s;
 }
 void SND::load()
 {
