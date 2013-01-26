@@ -33,12 +33,14 @@ void Demon::update(void){
 		}
 	}
 
+	/*
 	if(KBD::IsKeyPressed(KBD::KEY_DOWN)) {
 		happy();
 	}
 	if(KBD::IsKeyPressed(KBD::KEY_UP)) {
 		hurt();
 	}
+	*/
 
 
 	int pxpos = pos.x>>FPSH;

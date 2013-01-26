@@ -13,7 +13,7 @@ class SND
 		static void heartbeat();
 	protected:
 		static ALLEGRO_SAMPLE* s_whistle;
-		static ALLEGRO_SAMPLE* s_background[];
+		static ALLEGRO_SAMPLE* s_background;
 		static ALLEGRO_SAMPLE* s_heartbeat;
 	private:
 		SND() {}
