@@ -125,6 +125,8 @@ void Game::run(void)
 			player.update();
 			stave.update();
 			particles.update();
+			demon.update();
+			filterFilm.update();
 
 			// END OF GAME LOGIC
         }
@@ -137,12 +139,18 @@ void Game::run(void)
             background.draw();
 
 			player.draw();
+			demon.draw();
 
           //  stave.draw();
 			song.drawNotes();
 
 			stave.draw();
 			particles.draw();
+
+			//filters
+			filterDark.draw();
+			filterFilm.draw();
+
 
 			//END OF DRAW SPRITES
 

@@ -47,6 +47,10 @@ void Player::update(void) {
 		Stave& stave = g_game->getStave();
 		stave.startPulse();
 	}
+	
+	//else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
+	//	setState(IDLE);
+	//}
 
 	//update animation
 
