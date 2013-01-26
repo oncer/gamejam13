@@ -1,5 +1,5 @@
-
 #include "Song.h"
+#include "SND.h"
 
 Song::Song(const std::string& _song)
 	:notes(128), song(_song), bpm(120), frames_per_16beat(bpm_to_frames(120)/4)
@@ -69,6 +69,7 @@ void Song::update(void) {
 
 				//TODO play note
 				std::cout << "PLAY " << current_value << std::endl;
+				SND::whistle(note_val);
 
 				Note* available_note;
 				for(std::vector<Note>::iterator it = notes.begin(); it != notes.end(); ++it) {

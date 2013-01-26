@@ -7,12 +7,34 @@ Stave::Stave(void)
 {
 	add_sprite_rect("lines",0,0,400,32);
 	add_sprite_rect("lines",0,32,400,32);
-	setPosition(0,32*PX);
 }
 
 
 Stave::~Stave(void)
 {
+}
+
+void Stave::update(void){
+	Sprite::update();
+
+	if (KBD::JustPressed(KBD::KEY_UP)) {
+		selectedPitch--;
+		if (selectedPitch < 0) selectedPitch = 4;
+	}
+	if (KBD::JustPressed(KBD::KEY_DOWN)) {
+		selectedPitch++;
+		if (selectedPitch > 4) selectedPitch = 0;
+	}
+
+	setPosition(0,(selectedPitch+1)*16*PX);
+
+	if (g_game->getCurrentFrameID()%(FPS/8) == 0) {
+		cur_frame = (cur_frame + 1)%2;
+	}
+
+	if (pulse) {
+		pulseCount+=PX*4;
+	}
 }
 
 void Stave::draw(void)
@@ -34,31 +56,20 @@ void Stave::draw(void)
 	if (pulse) {
 		const rect rcPulse[] = {
 			{ 0,64,32,32}, // 0
-			{32,64,32,32}, // 1
-			{64,64,32,32}, // 2
-			{96,64,32,32}, // 3
-			{64,64,32,32}, // 4
-			{32,64,32,32}  // 5
+			{ 0,64,32,32}, // 1
+			{32,64,32,32}, // 2
+			{64,64,32,32}, // 3
+			{96,64,32,32}, // 4
+			{64,64,32,32}, // 5
+			{32,64,32,32}  // 6
 		};
-		s32 pulseFrame = (pulseCount>>FPSH) / 32;
-		if (pulseFrame > 5) {
+		s32 pulseFrame = (pulseCount>>FPSH) / 24;
+		if (pulseFrame > 6) {
 			pulse = false;
 		} else {
 			const rect& rc = rcPulse[pulseFrame];
 			GFX::blit("lines", rc, pulsePos.x>>FPSH, pulsePos.y>>FPSH);
 		}
-	}
-}
-
-void Stave::update(void){
-	Sprite::update();
-
-	if (g_game->getCurrentFrameID()%(FPS/8) == 0) {
-		cur_frame = (cur_frame + 1)%2;
-	}
-
-	if (pulse) {
-		pulseCount+=PX*8;
 	}
 }
 

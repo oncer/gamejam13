@@ -40,6 +40,8 @@ class Game
 		Player player;
 		Demon demon;
 
+		s32 backgroundNote;
+
         bool paused;
 };
 

@@ -120,6 +120,11 @@ void Game::run(void)
             KBD::Update();
 			frameID++;
 
+			if (frameID%120 == 60) {
+				backgroundNote = (backgroundNote + randint(1,3)) % 3;
+				SND::background(backgroundNote);
+			}
+
 			song.update();
 			song.updateNotes();
 			player.update();
@@ -137,16 +142,12 @@ void Game::run(void)
 
 			// DRAW SPRITES
             background.draw();
-
 			player.draw();
 			demon.draw();
-
-          //  stave.draw();
-			song.drawNotes();
-
 			stave.draw();
+			song.drawNotes();
 			particles.draw();
-
+			
 			//filters
 			filterDark.draw();
 			filterFilm.draw();

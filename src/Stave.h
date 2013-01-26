@@ -14,9 +14,12 @@ public:
 
 	void startPulse(void);
 
+	bool isReady(void) { return !pulse; }
+
 protected:
 	bool pulse;
 	s32 pulseCount;
+	s32 selectedPitch;
 
 
 };
