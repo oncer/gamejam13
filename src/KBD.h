@@ -10,7 +10,7 @@ public:
     static bool JustPressed(int key);
 
     enum {
-        KEY_JUMP   = 0x01,
+        KEY_ACTION   = 0x01,
         KEY_ATTACK = 0x02,
         KEY_LEFT   = 0x04,
         KEY_RIGHT  = 0x08,

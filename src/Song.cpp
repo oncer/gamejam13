@@ -17,6 +17,7 @@ void Song::update(void) {
 	
 	if(cursor >= song.length()) {
 		cursor = 0; //TODO END SONG
+		std::cout << "Song ended. Looping.." << std::endl;
 	}
 	
 	frame_counter++;
@@ -43,6 +44,29 @@ void Song::update(void) {
 
 			} else { // NOTE
 
+				//map note-name to int
+				int note_val;
+				switch (current_value) {
+				case 'e':
+					note_val = 0;
+					break;
+				case 'd':
+					note_val = 1;
+					break;
+				case 'c':
+					note_val = 2;
+					break;
+				case 'h':
+					note_val = 3;
+					break;
+				case 'a':
+					note_val = 4;
+					break;
+				default:
+					note_val = 0;
+				}
+
+
 				//TODO play note
 				std::cout << "PLAY " << current_value << std::endl;
 
@@ -52,7 +76,7 @@ void Song::update(void) {
 						available_note = &(*it);
 					}
 				}
-				available_note->respawn(1);
+				available_note->respawn(note_val);
 
 			}
 			

@@ -3,6 +3,9 @@
 Note::Note()
 {
 	alive = false;
+	anim_frame_duration=10;
+	anim_frames = 3;
+	anim = true;
 }
 
 
@@ -16,7 +19,9 @@ void Note::respawn(int _pitch) {
 	pitch = _pitch;
 
 	//init bitmap
-	add_sprite_rect("notes",0,0,16,32);
+	add_sprite_rect("notes",0,32*pitch,32,32);
+	add_sprite_rect("notes",32,32*pitch,32,32);
+	add_sprite_rect("notes",64,32*pitch,32,32);
 	
 	//set starting position
 	setPosition(pos_max_x * PX, (pitch + 1) * 16 * PX);
@@ -33,6 +38,7 @@ void Note::draw(void){
 }
 
 void Note::update(void){
+
 	if (alive) {
 		Sprite::update();
 
