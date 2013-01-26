@@ -1,6 +1,8 @@
 #pragma once
 #include "Sprite.h"
 #include "KBD.h"
+#include "SND.h"
+
 class Player :
 	public Sprite
 {
