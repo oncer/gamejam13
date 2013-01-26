@@ -160,6 +160,10 @@ s32 fp_cos(s32 angle)
     return (s32)(cos((double)angle / dPX * M_PI / 180.0) * dPX);
 }
 
+int bpm_to_frames(int bpm) {
+	return (int) (FPS/(((double)bpm)/60));
+}
+
 
 static double pc_tm;
 void pc_start()
@@ -173,3 +177,4 @@ void pc_end(const char* name)
     std::cout << "pc(" << name << "): " << pc_dur * 1000000.0 << "µs" << std::endl;
     pc_tm = al_get_time();
 }
+

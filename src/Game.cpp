@@ -118,12 +118,13 @@ void Game::run(void)
             frames_drawn++;
             al_clear_to_color(al_map_rgb(0, 0, 0));
 
-            rect rcFull = {0,0,WIDTH,HEIGHT};
-            GFX::blit("background", rcFull, 0, 0);
+            background.draw();
+            stave.draw();
 
             char c_fps[20];
             snprintf(c_fps, 20, "@%d@", fps);
             GFX::text(FONT_DEFAULT, 360, 220, c_fps);
+
 
             al_flip_display();
         }/* else if (redraw && !al_is_event_queue_empty(refresh_queue)) {
