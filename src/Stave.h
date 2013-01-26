@@ -9,7 +9,11 @@ class Stave :
 public:
 	enum {
 		STATE_IDLE,
-		STATE_BOUNCE
+		STATE_Q,
+		STATE_R,
+		STATE_S,
+		STATE_T,
+		STATE_U
 	};
 
 	Stave(void);
