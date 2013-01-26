@@ -153,6 +153,10 @@ void Game::run(void)
 
 			particles.draw();
 
+			//filters
+			filterDark.draw();
+
+
 			//END OF DRAW SPRITES
 
 			//draw fps

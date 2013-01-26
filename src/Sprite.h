@@ -10,7 +10,9 @@ class Sprite
         virtual ~Sprite(void);
 
         void reset(void);
-
+		
+        inline const u8& getOpacity() const { return opacity; }
+        inline void setOpacity(u8 _opacity) { this->opacity = _opacity; }
         inline const rect& getPosition() const { return pos; }
         inline const point& getVelocity() const { return velocity; }
         inline const point& getAcceleration() const { return accel; }

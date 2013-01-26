@@ -1,5 +1,6 @@
 #include "Demon.h"
 #include "KBD.h"
+#include "Globals.h"
 
 Demon::Demon(void) {
 	
@@ -39,10 +40,20 @@ void Demon::update(void){
 		hurt();
 	}
 
+
 	int pxpos = pos.x>>FPSH;
 	if (pxpos < 100) {
-		//map from [50, 100] to [1, 0]
-		((double)(100-pxpos))/50;
+		//map from [50, 100] to [1, 0] to [255, 0]
+		int opacity;
+		if (pxpos <= 50) {
+			opacity = 255;
+		} else opacity = (int) (255 * ((double)(100-pxpos))/50);
+
+		FilterDark& filter = g_game->getFilterDark();
+
+		filter.setOpacity(opacity);
+
+		std::cout<<"opacity: " << opacity<<std::endl;
 
 	}
 }

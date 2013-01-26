@@ -8,6 +8,7 @@
 #include "ParticleEmitter.h"
 #include "Player.h"
 #include "Demon.h"
+#include "FilterDark.h"
 
 class Game
 {
@@ -21,12 +22,14 @@ class Game
 		s32 getCurrentFrameID() { return frameID; }
 
 		ParticleEmitter& getParticles() { return particles; }
+		FilterDark& getFilterDark() { return filterDark; }
 
     protected:
         ALLEGRO_TIMER* timer;
 
 		//Stave stave;
 		Background background;
+		FilterDark filterDark;
 		Song song;
 		ParticleEmitter particles;
 
