@@ -1,5 +1,5 @@
 #pragma once
-#include "sprite.h"
+#include "Sprite.h"
 class Background :
 	public Sprite
 {
@@ -7,7 +7,7 @@ public:
 	Background(void);
 	~Background(void);
 	
-	void Background::draw(void);
-	void Background::update(void);
+	void draw(void);
+	void update(void);
 };
 
