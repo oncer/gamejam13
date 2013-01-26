@@ -7,8 +7,11 @@
 Game::Game(void) :
     timer(NULL),
     paused(false),
+	playtime(0),
+	gameover(false),
 	//song("e78d78e78c7d7e78a7h7a788c7a78d7e78h78a7c78e78c7a78h7a7a78c788d7")
-	song("e3d3e3c3e3a3h3a3c3a3d3e3h3a3c3e3c3a3h3a3c3d3")
+	song("e34d34e34c3d3e34a3h3a344c3a34d3e12h12a1c12e12c1a12h1a1a12c122d1")
+	//song("aechdchaechadcheadcheadchea")
 {
 }
 
@@ -96,6 +99,9 @@ void Game::run(void)
     int fps = 0;
     bool running = true;
 	frameID = 0;
+
+	int frame_counter = 0;
+
     while (running)
     {
         ALLEGRO_EVENT ev;
@@ -118,22 +124,31 @@ void Game::run(void)
             frames_fired++;
 
             // GAME LOGIC
-			if (frameID%120 == 0) {
-				backgroundNote = (backgroundNote + randint(1,3)) % 3;
-				SND::background(backgroundNote);
+			if (!gameover) {
+
+				frame_counter++;
+				if(frame_counter>= FPS) {
+					frame_counter = 0;
+					playtime++;
+				}
+
+				if (frameID%120 == 0) {
+					backgroundNote = (backgroundNote + randint(1,3)) % 3;
+					SND::background(backgroundNote);
+				}
+
+				KBD::Update();
+				frameID++;
+
+				song.update();
+				song.updateNotes();
+				player.update();
+				stave.update();
+				particles.update();
+				demon.update();
+				ambient.update();
 			}
-
-            KBD::Update();
-			frameID++;
-
-			song.update();
-			song.updateNotes();
-			player.update();
-			stave.update();
-			particles.update();
-			demon.update();
 			filterFilm.update();
-
 			// END OF GAME LOGIC
         }
 
@@ -157,9 +172,12 @@ void Game::run(void)
 			//END OF DRAW SPRITES
 
 			//draw fps
+            //char c_fps[20];
+            //snprintf(c_fps, 20, "@%d@", fps);
+            //GFX::text(FONT_DEFAULT, 360, 220, c_fps);
             char c_fps[20];
-            snprintf(c_fps, 20, "@%d@", fps);
-            GFX::text(FONT_DEFAULT, 360, 220, c_fps);
+            snprintf(c_fps, 20, "@%d@", playtime);
+			 GFX::text(FONT_DEFAULT, 360, 220, c_fps);
 
 
             al_flip_display();
@@ -174,5 +192,9 @@ void Game::run(void)
         }
     }
 
+}
+
+void Game::setGameover(bool gameover) {
+	this->gameover = gameover;
 }
 

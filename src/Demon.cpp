@@ -49,6 +49,7 @@ void Demon::update(void){
 		int opacity;
 		if (pxpos <= 50) {
 			opacity = 255;
+			g_game->setGameover(true);
 		} else opacity = (int) (255 * ((double)(100-pxpos))/50);
 
 		FilterDark& filter = g_game->getFilterDark();
@@ -62,17 +63,17 @@ void Demon::draw(void){
 	Sprite::draw();
 }
 
-void Demon::hurt(void){
+void Demon::hurt(int strength){
 	setState(HURT);
-	velocity.x += 4;
+	velocity.x += strength;
 	if(velocity.x > min_velocity) {
 		velocity.x = min_velocity;
 	}
 }
 
-void Demon::happy(void){
+void Demon::happy(int strength){
 	setState(HAPPY);
-	velocity.x -= 4;
+	velocity.x -= strength;
 	if(velocity.x < max_velocity) {
 		velocity.x = max_velocity;
 	}

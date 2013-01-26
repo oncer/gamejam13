@@ -46,12 +46,18 @@ void Note::update(void){
 		if ((pos.x>>FPSH) < pos_min_x) {
 			alive = false;
 			//note death
+			g_game->getDemon().happy(6);
+			point effectPos = {pos.x + 16*PX, pos.y + 15*PX};
+			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, effectPos);
 		}
 		
 		Stave& stave = g_game->getStave();
 		if (stave.hitNote(*this)) {
 			alive = false;
 			std::cout << "hit note" << std::endl;
+			g_game->getDemon().hurt(1);
+			point effectPos = {pos.x + 16*PX, pos.y + 15*PX};
+			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, effectPos);
 		}
 	}
 }

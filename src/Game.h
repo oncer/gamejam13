@@ -10,6 +10,7 @@
 #include "Demon.h"
 #include "FilterDark.h"
 #include "FilterFilm.h"
+#include "Ambient.h"
 
 class Game
 {
@@ -19,15 +20,19 @@ class Game
 
         void pause(bool enabled);
         void run(void);
+		void setGameover(bool gameover);
 
 		s32 getCurrentFrameID() { return frameID; }
 
 		ParticleEmitter& getParticles() { return particles; }
 		Stave& getStave() { return stave; }
 		FilterDark& getFilterDark() { return filterDark; }
+		Demon& getDemon() { return demon; }
 
     protected:
         ALLEGRO_TIMER* timer;
+
+		Ambient ambient;
 
 		Stave stave;
 		Background background;
@@ -43,6 +48,8 @@ class Game
 		s32 backgroundNote;
 
         bool paused;
+		unsigned int playtime;
+		bool gameover;
 };
 
 #endif
