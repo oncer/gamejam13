@@ -10,8 +10,8 @@ Game::Game(void) :
 	playtime(0),
 	gameover(false),
 	//song("e78d78e78c7d7e78a7h7a788c7a78d7e78h78a7c78e78c7a78h7a7a78c788d7")
-	song("e34d34e34c3d3e34a3h3a344c3a34d3e12h12a1c12e12c1a12h1a1a12c122d1")
-	//song("aechdchaechadcheadcheadchea")
+	//song("e34d34e34c3d3e34a3h3a344c3a34d3e12h12a1c12e12c1a12h1a1a12c122d1")
+	song("headache")
 {
 }
 

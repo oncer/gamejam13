@@ -30,5 +30,6 @@ public:
 protected:
 	s32 state;
 	s32 selectedPitch;
+	s32 combo;
 };
 

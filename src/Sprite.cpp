@@ -106,7 +106,7 @@ void Sprite::draw(void) const
         bounds.h = cut_rect.h;
     }
     GFX::blit_rotated(sr.sheet, bounds, x, y, opacity, rotation>>FPSH, h_flip, v_flip);
-    /* x -= display_offset.x;
+     /*x -= display_offset.x;
        y -= display_offset.y;
        s32 w = pos.w>>FPSH;
        s32 h = pos.h>>FPSH;
