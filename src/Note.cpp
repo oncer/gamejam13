@@ -46,6 +46,7 @@ void Note::update(void){
 			alive = false;
 			//note death
 		}
+
 	}
 }
 

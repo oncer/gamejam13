@@ -11,6 +11,7 @@ static ALLEGRO_SAMPLE* _loadSample(const char* f) {
 	} else {
 		return s;
 	}
+	return s;
 }
 void SND::load()
 {
