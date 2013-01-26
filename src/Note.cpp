@@ -1,4 +1,5 @@
 #include "Note.h"
+#include "Globals.h"
 
 Note::Note()
 {
@@ -46,7 +47,13 @@ void Note::update(void){
 			alive = false;
 			//note death
 		}
-
+		
+		Stave& stave = g_game->getStave();
+		s32 hitScore = stave.hitNote(*this);
+		if (hitScore > 0) {
+			alive = false;
+			std::cout << "hit note, score: " << hitScore << std::endl;
+		}
 	}
 }
 

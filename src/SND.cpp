@@ -1,7 +1,7 @@
 #include "SND.h"
 
 ALLEGRO_SAMPLE *SND::s_whistle;
-ALLEGRO_SAMPLE *SND::s_background[] = {NULL, NULL, NULL};
+ALLEGRO_SAMPLE *SND::s_background;
 ALLEGRO_SAMPLE *SND::s_heartbeat;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
@@ -14,9 +14,7 @@ static ALLEGRO_SAMPLE* _loadSample(const char* f) {
 void SND::load()
 {
 	s_whistle = _loadSample("sfx/whistle-c.ogg");
-	s_background[0] = _loadSample("sfx/background-f.ogg");
-	s_background[1] = _loadSample("sfx/background-g.ogg");
-	s_background[2] = _loadSample("sfx/background-a.ogg");
+	s_background = _loadSample("sfx/background-c.ogg");
 	s_heartbeat = _loadSample("sfx/heartbeat.ogg");
 }
 
@@ -39,8 +37,14 @@ void SND::whistle(int pitch)
 // untertöne: F G A
 void SND::background(int pitch)
 {
+	const float pitch_table[] = {
+		3520.0/4186.0, // A
+		3136.0/4186.0, // G
+		2794.0/4186.0  // F
+	};
+
 	if (pitch >= 0 && pitch < 3) {
-		al_play_sample(s_background[pitch], 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+		al_play_sample(s_background, 1.0, 0.0, pitch_table[pitch], ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
 
