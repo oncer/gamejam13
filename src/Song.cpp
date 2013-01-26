@@ -2,11 +2,12 @@
 #include "SND.h"
 
 Song::Song(const std::string& _song)
-	:notes(128), song(_song), bpm(120), frames_per_16beat(bpm_to_frames(120)/4)
+	:notes(128), song(_song), bpm(120), frames_per_16beat(bpm_to_frames(120)/2)
 {
 	cursor = 0;
-	frame_counter = 0;
+	frame_counter = frames_per_16beat;
 	pause_counter = 0;
+	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
 }
 
 Song::~Song(void){
