@@ -21,6 +21,7 @@ public:
 	void draw(void);
 
 	void startPulse(void);
+	void stopPulse(void);
 
 	bool isReady(void) { return !pulse; }
 

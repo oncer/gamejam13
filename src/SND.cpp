@@ -8,8 +8,6 @@ static ALLEGRO_SAMPLE* _loadSample(const char* f) {
 	ALLEGRO_SAMPLE *s = al_load_sample(f);
 	if (s == NULL) {
 		std::cout << "[error] Could not load " << f << std::endl;
-	} else {
-		return s;
 	}
 	return s;
 }

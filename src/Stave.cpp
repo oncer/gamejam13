@@ -31,11 +31,10 @@ void Stave::update(void){
 	pos.y = (selectedPitch+1)*16*PX;
 
 	if (pulse) {
-		pos.x += PX*4;
 		s32 f = (pos.x>>FPSH) / 24;
 		
 		if (f > 7) {
-			pulse = false;
+			stopPulse();
 		} else {
 			switch (f) {
 				case 7: cur_frame = 0; break;
@@ -82,6 +81,14 @@ void Stave::startPulse(void)
 {
 	pulse = true;
 	pos.x = -pos.w;
+	velocity.x = PX*6;
+}
+
+void Stave::stopPulse(void)
+{
+	pulse = false;
+	pos.x = -pos.w;
+	velocity.x = 0;
 }
 
 int Stave::hitNote(const Note& note)
@@ -93,14 +100,15 @@ int Stave::hitNote(const Note& note)
 	s32 noteX = note.getCenter().x;
 
 	s32 curX = get_center(pos).x;
-	s32 oldX = get_center(old_pos).x;
+	s32 oldX = curX - velocity.x + note.getVelocity().x;
 
 	if (oldX < noteX && curX >= noteX) {
-		pulse = false;
+		stopPulse();
 		if (cur_frame == 0) return HIT_BAD;
 		else if (cur_frame == 1 || cur_frame == 2) return HIT_GOOD;
 		else if (cur_frame == 3) return HIT_PERFECT;
 	}
 	return HIT_NONE;
 }
+
 
