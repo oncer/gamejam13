@@ -60,8 +60,9 @@ void Note::update(void){
 		if ((center.x>>FPSH) < pos_min_x) {
 			alive = false;
 			//note death
-			g_game->getDemon().happy(64);
+			if (!obstacle) g_game->getDemon().happy(64);
 			point effectPos = {pos.x + 16*PX, pos.y + 15*PX};
+			
 			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, effectPos);
 		}
 		
