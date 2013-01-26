@@ -24,6 +24,6 @@ protected:
 
 	void Demon::setState(State _state);
 
-	static const int max_velocity = -80;
+	static const int max_velocity = -160;
 	static const int min_velocity = -4;
 };
