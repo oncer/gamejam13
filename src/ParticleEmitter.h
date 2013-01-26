@@ -16,7 +16,8 @@ public:
 		NOTE2,
 		NOTE3,
 		NOTE4,
-		NOTE5
+		NOTE5,
+		OBSTACLE
     };
 
     Particle();
@@ -61,7 +62,8 @@ enum EffectType {
 	EFFECT_NOTE2,
 	EFFECT_NOTE3,
 	EFFECT_NOTE4,
-	EFFECT_NOTE5
+	EFFECT_NOTE5,
+	EFFECT_OBSTACLE
 };
 
 class ParticleEmitter
