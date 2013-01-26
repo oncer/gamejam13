@@ -63,17 +63,17 @@ void Demon::draw(void){
 	Sprite::draw();
 }
 
-void Demon::hurt(void){
+void Demon::hurt(int strength){
 	setState(HURT);
-	velocity.x += 4;
+	velocity.x += strength;
 	if(velocity.x > min_velocity) {
 		velocity.x = min_velocity;
 	}
 }
 
-void Demon::happy(void){
+void Demon::happy(int strength){
 	setState(HAPPY);
-	velocity.x -= 4;
+	velocity.x -= strength;
 	if(velocity.x < max_velocity) {
 		velocity.x = max_velocity;
 	}
