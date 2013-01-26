@@ -14,15 +14,21 @@ Note::~Note(void)
 {
 }
 
-void Note::respawn(int _pitch) {
+void Note::respawn(int _pitch, bool isObstacle) {
 	sprite_rects.clear();
 
 	pitch = _pitch;
 
 	//init bitmap
-	add_sprite_rect("notes",0,32*pitch,32,32);
-	add_sprite_rect("notes",32,32*pitch,32,32);
-	add_sprite_rect("notes",64,32*pitch,32,32);
+	if(isObstacle) {
+		add_sprite_rect("notes",0,32*5,32,32);
+		add_sprite_rect("notes",32,32*5,32,32);
+		add_sprite_rect("notes",64,32*5,32,32);
+	} else {
+		add_sprite_rect("notes",0,32*pitch,32,32);
+		add_sprite_rect("notes",32,32*pitch,32,32);
+		add_sprite_rect("notes",64,32*pitch,32,32);
+	}
 
 	display_offset.x = -8;
 	display_offset.y = -10;
@@ -60,8 +66,8 @@ void Note::update(void){
 		Stave& stave = g_game->getStave();
 		if (alive && stave.hitNote(*this)) {
 			SND::hitnote(pitch);
+			std::cout << "hit note" << std::endl;	
 			alive = false;
-			std::cout << "hit note" << std::endl;
 			//g_game->getDemon().hurt(1);
 			point effectPos = {pos.x + 16*PX, pos.y + 15*PX};
 			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, effectPos);

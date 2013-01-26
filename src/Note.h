@@ -11,10 +11,11 @@ class Note :
 		~Note(void);
 		void draw(void);
 		void update(void);
-		void respawn(int _pitch);
+		void respawn(int _pitch, bool isObstacle);
 		bool isAlive(void);
 
 		int getPitch() const { return pitch; }
+		bool isObstacle() const { return pitch > 4; }
 
 	protected:
 		static const int pos_max_x = 392;
