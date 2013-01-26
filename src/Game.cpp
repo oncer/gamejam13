@@ -117,13 +117,13 @@ void Game::run(void)
             frames_fired++;
 
             // GAME LOGIC
-            KBD::Update();
-			frameID++;
-
-			if (frameID%120 == 60) {
+			if (frameID%120 == 0) {
 				backgroundNote = (backgroundNote + randint(1,3)) % 3;
 				SND::background(backgroundNote);
 			}
+
+            KBD::Update();
+			frameID++;
 
 			song.update();
 			song.updateNotes();
