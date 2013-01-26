@@ -14,7 +14,7 @@ class SND
 		static void ambient(int type);
 	protected:
 		static ALLEGRO_SAMPLE* s_whistle;
-		static ALLEGRO_SAMPLE* s_background[];
+		static ALLEGRO_SAMPLE* s_background;
 		static ALLEGRO_SAMPLE* s_heartbeat;
 		static ALLEGRO_SAMPLE* s_ambient[];
 	private:
