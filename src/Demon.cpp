@@ -49,6 +49,7 @@ void Demon::update(void){
 	//map from [50,320] to [1, 0]
 	float gain = ((float)(320-pxpos)/270);
 	gain *= gain*gain; //^3
+	gain = std::min(gain, 0.7f);
 	SND::setLoopedTrepleGain(gain);
 	
 
