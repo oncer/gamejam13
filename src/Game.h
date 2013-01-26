@@ -27,6 +27,7 @@ class Game
 		ParticleEmitter& getParticles() { return particles; }
 		Stave& getStave() { return stave; }
 		FilterDark& getFilterDark() { return filterDark; }
+		Demon& getDemon() { return demon; }
 
     protected:
         ALLEGRO_TIMER* timer;

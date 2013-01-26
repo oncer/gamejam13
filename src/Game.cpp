@@ -146,9 +146,9 @@ void Game::run(void)
 				stave.update();
 				particles.update();
 				demon.update();
-				filterFilm.update();
 				ambient.update();
 			}
+			filterFilm.update();
 			// END OF GAME LOGIC
         }
 

@@ -10,8 +10,8 @@ public:
 	
 	void update(void);
 	void draw(void);
-	void hurt(void);
-	void happy(void);
+	void hurt(int strength);
+	void happy(int strength);
 
 protected:
 	enum State {
