@@ -11,7 +11,12 @@ public:
     enum ParticleType {
         BLOOD_BIG,
 		BLOOD_SMALL,
-		OSCILLO
+		OSCILLO,
+		NOTE1,
+		NOTE2,
+		NOTE3,
+		NOTE4,
+		NOTE5
     };
 
     Particle();
@@ -52,7 +57,11 @@ private:
 
 enum EffectType {
     EFFECT_BLOODSQUIRT,
-	EFFECT_BLOODDROP
+	EFFECT_NOTE1,
+	EFFECT_NOTE2,
+	EFFECT_NOTE3,
+	EFFECT_NOTE4,
+	EFFECT_NOTE5
 };
 
 class ParticleEmitter
