@@ -1,6 +1,7 @@
 #include "SND.h"
 
 ALLEGRO_SAMPLE *SND::s_whistle;
+ALLEGRO_SAMPLE *SND::s_hitnote;
 ALLEGRO_SAMPLE *SND::s_background;
 ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL, NULL};
 ALLEGRO_SAMPLE *SND::s_heartbeat;
@@ -21,6 +22,7 @@ void SND::load()
 	s_ambient[1] = _loadSample("sfx/ambient_breath2.ogg");
 	s_ambient[2] = _loadSample("sfx/ambient1.ogg");
 	s_heartbeat = _loadSample("sfx/heartbeat.ogg");
+	s_hitnote = _loadSample("sfx/catchnote.ogg");
 
 	i_treble = al_create_sample_instance(_loadSample("sfx/hightremolo.ogg"));
 	al_attach_sample_instance_to_mixer(i_treble, al_get_default_mixer());
@@ -39,6 +41,21 @@ void SND::whistle(int pitch)
 
 	if (pitch >= 0 && pitch < 5) {
 		al_play_sample(s_whistle, 1.0, 0.0, pitch_table[pitch], ALLEGRO_PLAYMODE_ONCE, NULL);
+	}
+}
+
+void SND::hitnote(int pitch)
+{
+	const float pitch_table[] = {
+		5274.0/4186.0, // E
+		4699.0/4186.0, // D
+		4186.0/4186.0, // C
+		3951.0/4186.0, // B
+		3520.0/4186.0  // A
+	};
+
+	if (pitch >= 0 && pitch < 5) {
+		al_play_sample(s_hitnote, 1.0, 0.0, pitch_table[pitch], ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
 }
 
