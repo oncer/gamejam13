@@ -49,10 +49,9 @@ void Note::update(void){
 		}
 		
 		Stave& stave = g_game->getStave();
-		s32 hitScore = stave.hitNote(*this);
-		if (hitScore > 0) {
+		if (stave.hitNote(*this)) {
 			alive = false;
-			std::cout << "hit note, score: " << hitScore << std::endl;
+			std::cout << "hit note" << std::endl;
 		}
 	}
 }

@@ -10,11 +10,15 @@ void KBD::Update()
     u32 previous_keystate = keystate;
     keystate = 0;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_SPACE)) keystate |= KEY_ACTION;
-    if (al_key_down(&kbd_state, ALLEGRO_KEY_S)) keystate |= KEY_ATTACK;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_LEFT)) keystate |= KEY_LEFT;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_RIGHT)) keystate |= KEY_RIGHT;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_UP)) keystate |= KEY_UP;
     if (al_key_down(&kbd_state, ALLEGRO_KEY_DOWN)) keystate |= KEY_DOWN;
+	if (al_key_down(&kbd_state, ALLEGRO_KEY_A)) keystate |= KEY_NOTE1;
+	if (al_key_down(&kbd_state, ALLEGRO_KEY_S)) keystate |= KEY_NOTE2;
+	if (al_key_down(&kbd_state, ALLEGRO_KEY_D)) keystate |= KEY_NOTE3;
+	if (al_key_down(&kbd_state, ALLEGRO_KEY_F)) keystate |= KEY_NOTE4;
+	if (al_key_down(&kbd_state, ALLEGRO_KEY_G)) keystate |= KEY_NOTE5;
 
     keytrg = (keystate ^ previous_keystate) & keystate;
 }
