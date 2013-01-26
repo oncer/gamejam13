@@ -10,7 +10,8 @@ class Particle: public Sprite
 public:
     enum ParticleType {
         BLOOD_BIG,
-		BLOOD_SMALL
+		BLOOD_SMALL,
+		OSCILLO
     };
 
     Particle();
@@ -31,6 +32,10 @@ public:
 		accel.y = y;
 	}
 
+	void setRotation(s32 r) {
+		rotation = r;
+	}
+
     void setDrag(s32 x, s32 y) {
         drag.x = x; drag.y = y;
     }
@@ -40,6 +45,9 @@ private:
     bool alive;
     s32 anim_wait;
     s32 anim_delay;
+	bool looping;
+	s32 fadeout;
+	bool autorotate;
 };
 
 enum EffectType {

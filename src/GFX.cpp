@@ -30,11 +30,11 @@ void BitmapLib::load()
     LOAD("background",      "gfx/background.png");
     LOAD("demon",           "gfx/demon.png");
     LOAD("font0",           "gfx/font.png");
-    LOAD("lines",           "gfx/lines.png");
     LOAD("notes",           "gfx/notes.png");
 	LOAD("blood",			"gfx/blood.png");
     LOAD("player",          "gfx/player.png");
 	LOAD("ghost",			"gfx/ghost.png");
+	LOAD("particles",		"gfx/particles.png");
     LOAD("filter_dark",     "gfx/filter_dark.png");
     LOAD("filter_film",     "gfx/filter_film.png");
 

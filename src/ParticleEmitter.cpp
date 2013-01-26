@@ -66,6 +66,10 @@ void Particle::init(ParticleType type)
     Sprite::reset();
 	this->type = type;
     maxVelocity.x = maxVelocity.y = 16<<FPSH; // sufficiently large value
+	looping = false;
+	fadeout = 0;
+	autorotate = true;
+			
     int i;
     switch (type) {
 		case BLOOD_BIG:
@@ -93,6 +97,23 @@ void Particle::init(ParticleType type)
 			collisionResponse = false;
 			break;
 		}
+		case OSCILLO:
+		{
+			add_sprite_rect("particles", 0, 0, 8, 8);
+			add_sprite_rect("particles", 8, 0, 8, 8);
+			add_sprite_rect("particles",16, 0, 8, 8);
+			add_sprite_rect("particles",24, 0, 8, 8);
+			display_offset.x = display_offset.y = -4;
+			pos.w = pos.h = 1<<FPSH;
+			anim_wait = 4;
+			anim_delay = anim_wait;
+			alive = true;
+			collisionResponse = false;
+			looping = true;
+			fadeout = 2;
+			autorotate = false;
+			break;
+		}
 	}
 }
 
@@ -100,13 +121,17 @@ void Particle::update()
 {
 	ParticleEmitter& emitter = g_game->getParticles();
     Sprite::update();
-	rotation = fp_atan2(velocity);
+	if (autorotate) rotation = fp_atan2(velocity);
     anim_wait--;
     if (anim_wait < 0) {
         anim_wait = anim_delay;
         cur_frame++;
         if (cur_frame >= sprite_rects.size()) {
-            alive = false;
+			if (!looping) {
+				alive = false;
+			} else {
+				cur_frame = 0;
+			}
         } else if (type == BLOOD_BIG) {
 			Particle* p = emitter.addParticle(BLOOD_SMALL);
 			if (p != NULL) {
@@ -115,6 +140,10 @@ void Particle::update()
 			}
 		}
     }
+	opacity -= fadeout;
+	if (opacity <= 0) {
+		alive = false;
+	}
 }
 
 

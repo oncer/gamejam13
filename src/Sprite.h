@@ -11,8 +11,8 @@ class Sprite
 
         void reset(void);
 		
-        inline const u8& getOpacity() const { return opacity; }
-        inline void setOpacity(u8 _opacity) { this->opacity = _opacity; }
+        inline const s32 getOpacity() const { return opacity; }
+        inline void setOpacity(s32 _opacity) { this->opacity = _opacity; }
         inline const rect& getPosition() const { return pos; }
         inline const point& getVelocity() const { return velocity; }
         inline const point& getAcceleration() const { return accel; }
@@ -81,7 +81,7 @@ class Sprite
 		int anim_frame_counter;
 
         point display_offset;
-        u8 opacity;
+        s32 opacity;
         s32 rotation;
 
         bool h_flip, v_flip;
