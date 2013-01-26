@@ -11,6 +11,7 @@
 #include "FilterDark.h"
 #include "FilterFilm.h"
 #include "Ambient.h"
+#include "util.h"
 
 class Game
 {

@@ -97,3 +97,7 @@ void Song::drawNotes(void){
 		it->draw();
 	}
 }
+
+std::string Song::getText(void) {
+	return song;
+}
