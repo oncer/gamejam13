@@ -34,20 +34,20 @@ void Player::setState(States _state) {
 void Player::draw(void) {
 	Sprite::draw();
 }
+
+void Player::pump(void) {
+	setState(PUMP);
+	ParticleEmitter& particles = g_game->getParticles();
+	point effectPos = {pos.x + 47*PX, pos.y + 19*PX};
+	particles.addEffect(EFFECT_BLOODSQUIRT, effectPos);
+	SND::heartbeat();
+}
+
 void Player::update(void) {
 	
 	Sprite::update();
 
 	//handle keypress
-	Stave& stave = g_game->getStave();
-	if (stave.isReady() && state != PUMP && KBD::JustPressed(KBD::KEY_ACTION)) {
-		setState(PUMP);
-		ParticleEmitter& particles = g_game->getParticles();
-		point effectPos = {pos.x + 47*PX, pos.y + 19*PX};
-		particles.addEffect(EFFECT_BLOODSQUIRT, effectPos);
-		stave.startPulse();
-		SND::heartbeat();
-	}
 	
 	//else if( ! KBD::IsKeyPressed(KBD::KEY_ACTION) && state != IDLE ) { //released key and state not yet set
 	//	setState(IDLE);

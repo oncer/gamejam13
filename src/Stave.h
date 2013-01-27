@@ -9,11 +9,6 @@ class Stave :
 public:
 	enum {
 		STATE_IDLE,
-		STATE_Q,
-		STATE_R,
-		STATE_S,
-		STATE_T,
-		STATE_U
 	};
 
 	Stave(void);
@@ -22,14 +17,12 @@ public:
 	void update(void);
 	void draw(void);
 
-	void startPulse(void);
-	bool isReady(void) { return state == STATE_IDLE; }
-
 	bool hitNote(const Note& note);
 
 protected:
 	s32 state;
-	s32 selectedPitch;
+	s32 selectedPitch; // (-1)..(4)
+	s32 note0, note1;
 	s32 combo;
 };
 
