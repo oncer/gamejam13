@@ -8,7 +8,7 @@ Game::Game(void) :
 	timer(NULL),
 	paused(false),
 	playtime(0),
-	gameover(false)
+	state(Gamestate::MENU)
 {
 	score = 0;
 	combo = 0;
@@ -128,15 +128,18 @@ void Game::run(void)
             frames_fired++;
 
 			// GAME LOGIC
-			if (!gameover) {
+			
+			KBD::Update();
 
-				frame_counter++;
-				if(frame_counter>= FPS) {
-					frame_counter = 0;
-					playtime++;
-				}
+			frame_counter++;
+			if(frame_counter>= FPS) {
+				frame_counter = 0;
+				if (state == GAME) playtime++;
+			}
+			if (state == MENU) {
+				menu.update();
+			} else if (state == GAME) {
 
-				KBD::Update();
 				frameID++;
 
 				song.update();
@@ -147,7 +150,10 @@ void Game::run(void)
 				demon.update();
 				ambient.update();
 				heartbeat.update();
+			} else if (state == GAMEOVER) {
+				gameOverBg.update();
 			}
+
 			filterFilm.update();
 			// END OF GAME LOGIC
 		}
@@ -158,7 +164,9 @@ void Game::run(void)
 
 			
 			// DRAW SPRITES
-			if (!gameover) {
+			if (state == MENU) {
+				menu.draw();
+			} else if (state == GAME) {
 				background.draw();
 				player.draw();
 				demon.draw();
@@ -168,10 +176,10 @@ void Game::run(void)
 				stave.draw();
 				
 				filterDark.draw();
-			}
-			if(gameover) {
+			} else if(state == GAMEOVER) {
 				gameOverBg.draw();
 			}
+
 			filterFilm.draw();
 
 
@@ -200,8 +208,8 @@ void Game::run(void)
 
 }
 
-void Game::setGameover(bool gameover) {
-	this->gameover = gameover;
+void Game::setGamestate(Gamestate state) {
+	this->state = state;
 }
 
 void Game::failnote(const Sprite& s, s32 type)
