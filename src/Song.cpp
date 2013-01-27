@@ -9,7 +9,7 @@ float Song::bar_generator2_pitch[] = {0.3f,0.4f,0.6f,0.7f};
 //float Song::bar_generator2_placement[] = {0.5f, 0.15f, 0.25f, 0.1f, 0.35f, 0.1f, 0.25f, 0.15f};
 
 Song::Song()
-	:notes(128), bpm(120), frames_per_16beat(bpm_to_frames(120)), bar_counter(0), beat_counter(0)
+	:notes(128), bpm(120), frames_per_16beat(bpm_to_frames(120)), bar_counter(0), beat_counter(8)
 {
 	frame_counter = frames_per_16beat;
 	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
