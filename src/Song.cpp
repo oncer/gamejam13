@@ -40,10 +40,14 @@ void Song::update(void) {
 		if(beat_counter%4 == 0) {
 			SND::timbal();
 		}
-		if(beat_counter >= 8) { //bar
+		if((difficulty == EASY && beat_counter % 8 == 0) ||
+			(difficulty == MEDIUM && beat_counter % 4 == 0) ||
+			(difficulty == HARD && beat_counter % 4 == 0)) { // 4 because double frame counter
 			backgroundNote += randint(1,3);
 			backgroundNote %= 3;
 			SND::background(backgroundNote);
+		}
+		if(beat_counter >= 8) { //bar
 
 			beat_counter = 0;
 
