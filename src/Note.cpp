@@ -40,7 +40,9 @@ void Note::respawn(int _pitch, bool isObstacle) {
 	//set starting position
 	setPosition(pos_max_x * PX - pos.w/2, (pitch + 2) * 16 * PX - pos.h/2);
 
-	velocity.x = -128;
+	velocity.x = -256;
+	maxVelocity.x = 512;
+	//accel.x = -2;
 
 	alive = true;
 }

@@ -10,7 +10,7 @@ class Song {
 		void update(void);
 		void updateNotes(void);
 		void drawNotes(void);
-		std::string Song::getText(void);
+		std::string getText(void);
 
 	protected:
 		std::string song;

@@ -11,6 +11,7 @@ Stave::Stave(void)
 	add_sprite_rect("ghost",0,0,48,48);
 	
 	state = STATE_IDLE;
+	velocity.x = PX;
 }
 
 
@@ -32,10 +33,12 @@ void Stave::update(void){
 	switch (state) {
 		case STATE_IDLE:
 			combo = 0;
-			velocity.x = PX;
 			velocity.y = (targetY - center.y) / 16;
 			break;
 		case STATE_Q:
+			maxVelocity.y = PX*16;
+			accel.y = 0;
+			drag.x = 0;
 			targetY = 16*PX*5;
 			velocity.x = PX;
 			velocity.y = (targetY - center.y) / 4;
@@ -74,6 +77,7 @@ void Stave::update(void){
 			if (center.y > 16*4*PX) {
 				state = STATE_IDLE;
 				accel.y = 0;
+				velocity.x = PX;
 			}
 			break;
 	}
