@@ -196,11 +196,11 @@ void Game::run(void)
 				GFX::text_center(FONT_DEFAULT, 200, 220, c_stats);
 			} else if (state == GAMEOVER) {
 				char c_stats[100];
-				snprintf(c_stats, 100, "FINAL SCORE: %05d", score);
+				snprintf(c_stats, 100, "FINAL SCORE: %d", score);
 				GFX::text_center(FONT_DEFAULT, 200, 180, c_stats);
-				snprintf(c_stats, 100, "MAX COMBO: %05d", maxCombo);
+				snprintf(c_stats, 100, "MAX COMBO: %d", maxCombo);
 				GFX::text_center(FONT_DEFAULT, 200, 200, c_stats);
-				snprintf(c_stats, 100, "TIME SURVIVED: %05d", playtime);
+				snprintf(c_stats, 100, "TIME SURVIVED: %d", playtime);
 				GFX::text_center(FONT_DEFAULT, 200, 220, c_stats);
 			}
 

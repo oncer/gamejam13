@@ -88,8 +88,10 @@ bool Stave::hitNote(const Note& note)
 					note0.getValue() != -1) {
 				note0.setValue(-1);
 				note1.setValue(-1);
-				g_game->hitnote(note0, randint(0,5));
-				g_game->hitnote(note1, randint(0,5));
+				s32 pitch0 = randint(0,5);
+				s32 pitch1 = (pitch0 + randint(1,5))%5;
+				g_game->hitnote(note0, pitch0);
+				g_game->hitnote(note1, pitch1);
 			}
 			return true;
 		}

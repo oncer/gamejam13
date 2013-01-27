@@ -38,7 +38,7 @@ class GFX
         static void blit_rotated(const char* bmp, const rect& src, s32 dst_x, s32 dst_y, u8 alpha, s32 angle, bool h_flip=false, bool v_flip=false);
 
         static void text(FontType font, s32 dst_x, s32 dst_y, const char* str, u32 color=0xffffffff);
-		static void GFX::text_center(FontType font, s32 dst_x, s32 dst_y, const char *str, u32 color=0xffffffff)
+		static void text_center(FontType font, s32 dst_x, s32 dst_y, const char *str, u32 color=0xffffffff);
     private:
         GFX(void);
         virtual ~GFX(void);
