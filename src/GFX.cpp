@@ -124,3 +124,10 @@ void GFX::text(FontType font, s32 dst_x, s32 dst_y, const char *str, u32 color)
     al_draw_text(alFont, alColor, dst_x, dst_y, 0, str);
 }
 
+void GFX::text_center(FontType font, s32 dst_x, s32 dst_y, const char *str, u32 color)
+{
+    ALLEGRO_FONT* alFont = bmplib().getFont(font);
+    ALLEGRO_COLOR alColor = al_map_rgba(color>>24, (color>>16)&0xff, (color>>8)&0xff, color&0xff);
+    al_draw_text_center(alFont, alColor, dst_x, dst_y, ALLEGRO_ALIGN_CENTRE, str);
+}
+

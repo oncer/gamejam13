@@ -12,6 +12,7 @@ Game::Game(void) :
 {
 	score = 0;
 	combo = 0;
+	maxCombo = 0;
 }
 
 Game::~Game(void)
@@ -192,7 +193,15 @@ void Game::run(void)
 			if (state == GAME) {
 				char c_stats[100];
 				snprintf(c_stats, 100, "SCORE: %05d     COMBO:%03d     TIME: %05d", score, combo, playtime);
-				GFX::text(FONT_DEFAULT, 50, 220, c_stats);
+				GFX::text_center(FONT_DEFAULT, 200, 220, c_stats);
+			} else if (state == GAMEOVER) {
+				char c_stats[100];
+				snprintf(c_stats, 100, "FINAL SCORE: %05d", score);
+				GFX::text_center(FONT_DEFAULT, 200, 180, c_stats);
+				snprintf(c_stats, 100, "MAX COMBO: %05d", maxCombo);
+				GFX::text_center(FONT_DEFAULT, 200, 200, c_stats);
+				snprintf(c_stats, 100, "TIME SURVIVED: %05d", playtime);
+				GFX::text_center(FONT_DEFAULT, 200, 220, c_stats);
 			}
 
 
@@ -245,6 +254,7 @@ void Game::hitnote(const Sprite& s, s32 pitch)
 	player.pump();
 	heartbeat.startPulse();
 	combo++;
+	if (combo > maxCombo) maxCombo = combo;
 	score += combo;
 	std::cout << "score + " << combo << " = " << score << std::endl;
 }

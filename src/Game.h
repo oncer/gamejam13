@@ -64,6 +64,7 @@ class Game
 
 		s32 score;
 		s32 combo;
+		s32 maxCombo;
 
         bool paused;
 		unsigned int playtime;
