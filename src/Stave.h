@@ -3,17 +3,29 @@
 #include "Sprite.h"
 #include "Note.h"
 
+class StaveNote : public Sprite
+{
+	public:
+		StaveNote(void);
+		~StaveNote(void);
+
+		void update();
+		void draw();
+
+		s32 getValue() const { return value; }
+		void setValue(s32 v);
+		void collide(const Note& note);
+		
+	protected:
+		s32 value;
+};
+
 class Stave :
 	public Sprite
 {
 public:
 	enum {
 		STATE_IDLE,
-		STATE_Q,
-		STATE_R,
-		STATE_S,
-		STATE_T,
-		STATE_U
 	};
 
 	Stave(void);
@@ -22,14 +34,12 @@ public:
 	void update(void);
 	void draw(void);
 
-	void startPulse(void);
-	bool isReady(void) { return state == STATE_IDLE; }
-
 	bool hitNote(const Note& note);
 
 protected:
 	s32 state;
-	s32 selectedPitch;
+	s32 selectedPitch; // (-1)..(4)
+	StaveNote note0, note1;
 	s32 combo;
 };
 

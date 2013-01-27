@@ -13,6 +13,8 @@ public:
 	void update(void);
 	void draw(void);
 
+	void pump(void);
+
 protected:
 	enum States {
 		IDLE,

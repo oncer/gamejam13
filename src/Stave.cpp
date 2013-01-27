@@ -4,14 +4,13 @@
 
 Stave::Stave(void)
 {
-	pos.w = (16<<FPSH);
-	pos.h = (14<<FPSH);
-	display_offset.x = -16;
-	display_offset.y = -17;
-	add_sprite_rect("ghost",0,0,48,48);
+	display_offset.x = 0;
+	display_offset.y = -8;
+	pos.w = (32<<FPSH);
+	pos.h = (48<<FPSH);
+	add_sprite_rect("cursor",0,0,32,64);
 	
 	state = STATE_IDLE;
-	velocity.x = PX;
 }
 
 
@@ -19,100 +18,130 @@ Stave::~Stave(void)
 {
 }
 
+const int minPitch = -1;
+const int maxPitch = 4;
+
 void Stave::update(void){
 	Sprite::update();
-
-	s32 targetY = 16*PX*4;
-	rotation = fp_atan2(velocity);
-	ParticleEmitter& particles = g_game->getParticles();
-	Particle* p = particles.addParticle(Particle::OSCILLO);
-	p->setCenter(getCenter());
-	p->setRotation(rotation);
-
-	point center = getCenter();
-	switch (state) {
-		case STATE_IDLE:
-			combo = 0;
-			velocity.y = (targetY - center.y) / 16;
-			break;
-		case STATE_Q:
-			maxVelocity.y = PX*16;
-			accel.y = 0;
-			drag.x = 0;
-			targetY = 16*PX*5;
-			velocity.x = PX;
-			velocity.y = (targetY - center.y) / 4;
-			if (std::abs(targetY - center.y) < PX) {
-				state = STATE_R;
-			}
-			break;
-		case STATE_R:
-			velocity.x = PX*2;
-			velocity.y = -PX*6;
-			if (center.y < 16*PX*2) {
-				pos.y = 16*PX;
-				state = STATE_S;
-			}
-			break;
-		case STATE_S:
-			velocity.x = PX;
-			velocity.y = PX*6;
-			if (center.y > 16*6*PX) {
-				pos.y = 16*6*PX - pos.h/2;
-				state = STATE_T;
-			}
-			break;
-		case STATE_T:
-			velocity.x = PX*2;
-			velocity.y = -PX*6;
-			if (center.y < 16*4*PX) {
-				pos.y = 16*4*PX - pos.h/2;
-				state = STATE_U;
-				velocity.y = -PX*2;
-			}
-			break;
-		case STATE_U:
-			accel.y = PX/2;
-			velocity.x = PX*2;
-			if (center.y > 16*4*PX) {
-				state = STATE_IDLE;
-				accel.y = 0;
-				velocity.x = PX;
-			}
-			break;
+	if (KBD::JustPressed(KBD::KEY_UP)) {
+		selectedPitch--;
+		if (selectedPitch < minPitch) selectedPitch = maxPitch;
 	}
-	if ((pos.x + pos.w) > (WIDTH<<FPSH)) {
-		pos.x = -pos.w;
+	if (KBD::JustPressed(KBD::KEY_DOWN)) {
+		selectedPitch++;
+		if (selectedPitch > maxPitch) selectedPitch = minPitch;
+	}
+	if (KBD::JustPressed(KBD::KEY_ACTION)) {
+		// swap notes
+		s32 tmp = note0.getValue();
+		note0.setValue(note1.getValue());
+		note1.setValue(tmp);
 	}
 
-	if (combo > 0 && state == STATE_IDLE) {
-		combo = 0;
-	}
+	pos.x = 16*PX;
+	pos.y = (selectedPitch + 1)*PX*16;
+	point note0Center = {getCenter().x, pos.y + (16<<FPSH)};
+	note0.setCenter(note0Center);
+	point note1Center = {getCenter().x, pos.y + (32<<FPSH)};
+	note1.setCenter(note1Center);
+
+	note0.update();
+	note1.update();
 }
 
 void Stave::draw(void)
 {
-	s32 displaceY = fp_sin(g_game->getCurrentFrameID()*PX*8)*2;
-	pos.y += displaceY;
-	Sprite::draw();
-	pos.y -= displaceY;
-}
-
-void Stave::startPulse(void)
-{
-	if (state == STATE_IDLE) {
-		state = STATE_Q;
+	// draw lines
+	rect rcLines[] = {
+		{0, 0, 400, 16},
+		{0,16, 400, 16}
+	};
+	rect& rcLine = rcLines[(g_game->getCurrentFrameID()/8)%2];
+	for (int i=1; i<7; i++) {
+		GFX::blit_alpha("lines", rcLine, 0, 16*i, 128);
 	}
+	Sprite::draw();
+	note0.draw();
+	note1.draw();
 }
 
 bool Stave::hitNote(const Note& note)
 {
-	const rect& noteRect = note.getPosition();
-	rect coll = get_collision(pos, noteRect);
-	bool hit = is_collision(coll);
-	if (hit) {
-		combo++;
+	point center = getCenter();
+	s32 hitX = center.x;
+	s32 noteX = note.getCenter().x;
+	s32 noteVelX = note.getVelocity().x;
+	if (note.getPitch() == (selectedPitch) || note.getPitch() == (selectedPitch + 1)) {
+		if (noteX <= hitX && (noteX - noteVelX) > hitX) {
+			if (note.getPitch() == selectedPitch) {
+				note0.collide(note);
+			} else {
+				note1.collide(note);
+			}
+			return true;
+		}
 	}
-	return hit;
+	return false;
+}
+
+
+StaveNote::StaveNote()
+{
+	anim_frame_counter = 0;
+	display_offset.x = -8;
+	display_offset.y = -10;
+	pos.w = (14<<FPSH);
+	pos.h = (12<<FPSH);
+	// white
+	add_sprite_rect("cursor", 0, 64, 32, 32);
+	add_sprite_rect("cursor",32, 64, 32, 32);
+	add_sprite_rect("cursor",64, 64, 32, 32);
+	// black
+	add_sprite_rect("cursor", 0, 96, 32, 32);
+	add_sprite_rect("cursor",32, 96, 32, 32);
+	add_sprite_rect("cursor",64, 96, 32, 32);
+
+	value = -1;
+}
+
+StaveNote::~StaveNote()
+{
+}
+
+void StaveNote::update()
+{
+	Sprite::update();
+	anim_frame_counter++;
+	if (anim_frame_counter > 4) {
+		anim_frame_counter = 0;
+		cur_frame++;
+		if (value == 0 && (cur_frame < 0 || cur_frame > 2)) cur_frame = 0;
+		if (value == 1 && (cur_frame < 3 || cur_frame > 5)) cur_frame = 3;
+	}
+}
+
+void StaveNote::setValue(s32 v)
+{
+	value = v;
+	cur_frame = (v == 0) ? 0 : 3;
+}
+
+void StaveNote::draw()
+{
+	if (value >= 0) {
+		Sprite::draw();
+	}
+}
+
+void StaveNote::collide(const Note& note)
+{
+	if (value == -1) {
+		value = (s32)note.getType();
+	} else if (value == (s32)note.getType()) {
+		value = -1;
+	} else {
+		value = (s32)note.getType();
+		// hurt
+	}
 }
 

@@ -1,7 +1,7 @@
 #include "Song.h"
 #include "SND.h"
 
-float Song::bar_generator1_placement[] = {1.0f, 0.1f, 0.4f, 0.1f, 0.6f, 0.1f, 0.4f, 0.1f};
+float Song::bar_generator1_placement[] = {1.0f, 0.05f, 0.3f, 0.05f, 0.4f, 0.05f, 0.3f, 0.05f};
 float Song::bar_generator1_pitch[] = {0.2f,0.4f,0.6f,0.8f}; //note: cummulative probability, fith element would be sum = 1
 float Song::bar_generator2_placement[] = {1.0f, 0.3f, 0.5f, 0.2f, 0.7f, 0.2f, 0.5f, 0.3f};
 float Song::bar_generator2_pitch[] = {0.3f,0.4f,0.6f,0.7f}; 
@@ -12,8 +12,8 @@ Song::Song()
 	frame_counter = frames_per_16beat;
 	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
 	backgroundNote = 0;
-	generateNextBar();
 	difficulty = EASY;
+	generateNextBar();
 }
 
 Song::~Song(void){
@@ -95,13 +95,13 @@ void Song::generateNextBar(void){
 	for (int i = 0; i < 8; i++) { //for each 1/8 beat
 
 		float placement_seed = ( (float)randint(0,100) ) / 100;
-		//std::cout<<"rand-placement-seed: "<<placement_seed<<std::endl;
 		bool place_note;
 		if(difficulty == EASY) {
 			place_note = placement_seed < bar_generator1_placement[i]; //e.g. 0.4f < 1.0f --> 100%, 0.6f < 0.3f --> note not placed
 		} else {
 			place_note = placement_seed < bar_generator2_placement[i];
 		}
+		std::cout<<"rand__ seed: "<<placement_seed<<" prob: "<<bar_generator1_placement[i]<<" place: "<<place_note<<std::endl;
 
 		if (place_note) {
 			//find random pitch 
