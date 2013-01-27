@@ -10,6 +10,8 @@ Game::Game(void) :
 	playtime(0),
 	gameover(false)
 {
+	score = 0;
+	combo = 0;
 }
 
 Game::~Game(void)
@@ -204,7 +206,7 @@ void Game::setGameover(bool gameover) {
 
 void Game::failnote(const Sprite& s, s32 type)
 {
-	demon.happy(64);
+	demon.happy(32);
 	particles.addEffect(EFFECT_OBSTACLE, s.getCenter());
 	Particle::ParticleType particleType;
 	switch (type) {
@@ -215,6 +217,7 @@ void Game::failnote(const Sprite& s, s32 type)
 	p->setCenter(s.getCenter());
 	p->setAcceleration(0, PX/8); // gravity
 	SND::failnote();
+	combo = 0;
 }
 
 void Game::hitnote(const Sprite& s, s32 pitch)
