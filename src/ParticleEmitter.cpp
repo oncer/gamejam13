@@ -145,8 +145,7 @@ void Particle::init(ParticleType type)
 			alive = true;
 			collisionResponse = false;
 			looping = true;
-			fadeout = 1;
-			opacity = 128;
+			fadeout = 2;
 			autorotate = false;
 			break;
 		}
