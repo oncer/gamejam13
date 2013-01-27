@@ -16,6 +16,10 @@ Song::Song()
 	backgroundNote = 0;
 	difficulty = EASY;
 	//generateNextBar();
+
+	for (int i = 0; i < 8; i++) {
+		next_bar_pitch[i] = Note::Pitch::NONE;
+	}
 }
 
 Song::~Song(void){
