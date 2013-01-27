@@ -60,7 +60,7 @@ void Demon::update(void){
 		int opacity;
 		if (pxpos <= 50) {
 			opacity = 255;
-			g_game->setGamestate(Game::Gamestate::GAMEOVER);
+			g_game->setGamestate(Game::GAMEOVER);
 			SND::stopLoopedTreble();
 			SND::dead();
 		} else opacity = (int) (255 * ((double)(100-pxpos))/50);

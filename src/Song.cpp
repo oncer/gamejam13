@@ -19,7 +19,7 @@ Song::Song()
 	difficulty = EASY;
 
 	for (int i = 0; i < 8; i++) {
-		next_bar_pitch[i] = Note::Pitch::NONE;
+		next_bar_pitch[i] = Note::NONE;
 	}
 }
 

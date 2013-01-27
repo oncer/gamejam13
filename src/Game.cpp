@@ -8,8 +8,11 @@ Game::Game(void) :
 	timer(NULL),
 	paused(false),
 	playtime(0),
-	state(Gamestate::MENU)
+	state(MENU)
 {
+	score = 0;
+	combo = 0;
+	maxCombo = 0;
 }
 
 Game::~Game(void)
@@ -187,9 +190,19 @@ void Game::run(void)
 			//char c_fps[20];
 			//snprintf(c_fps, 20, "@%d@", fps);
 			//GFX::text(FONT_DEFAULT, 360, 220, c_fps);
-			char c_fps[20];
-			snprintf(c_fps, 20, "@%d@", playtime);
-			GFX::text(FONT_DEFAULT, 360, 220, c_fps);
+			if (state == GAME) {
+				char c_stats[100];
+				snprintf(c_stats, 100, "SCORE: %05d     COMBO:%03d     TIME: %05d", score, combo, playtime);
+				GFX::text_center(FONT_DEFAULT, 200, 220, c_stats);
+			} else if (state == GAMEOVER) {
+				char c_stats[100];
+				snprintf(c_stats, 100, "FINAL SCORE: %d", score);
+				GFX::text_center(FONT_DEFAULT, 200, 180, c_stats);
+				snprintf(c_stats, 100, "MAX COMBO: %d", maxCombo);
+				GFX::text_center(FONT_DEFAULT, 200, 200, c_stats);
+				snprintf(c_stats, 100, "TIME SURVIVED: %d", playtime);
+				GFX::text_center(FONT_DEFAULT, 200, 220, c_stats);
+			}
 
 
 			al_flip_display();
@@ -212,7 +225,7 @@ void Game::setGamestate(Gamestate state) {
 
 void Game::failnote(const Sprite& s, s32 type)
 {
-	demon.happy(64);
+	demon.happy(32);
 	particles.addEffect(EFFECT_OBSTACLE, s.getCenter());
 	Particle::ParticleType particleType;
 	switch (type) {
@@ -223,6 +236,7 @@ void Game::failnote(const Sprite& s, s32 type)
 	p->setCenter(s.getCenter());
 	p->setAcceleration(0, PX/8); // gravity
 	SND::failnote();
+	combo = 0;
 }
 
 void Game::hitnote(const Sprite& s, s32 pitch)
@@ -239,5 +253,9 @@ void Game::hitnote(const Sprite& s, s32 pitch)
 	particles.addEffect(effectType, s.getCenter());
 	player.pump();
 	heartbeat.startPulse();
+	combo++;
+	if (combo > maxCombo) maxCombo = combo;
+	score += combo;
+	std::cout << "score + " << combo << " = " << score << std::endl;
 }
 

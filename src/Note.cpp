@@ -40,6 +40,7 @@ void Note::respawn(Pitch _pitch, Type _type) {
 	//accel.x = -2;
 
 	alive = true;
+	opacity = 0;
 }
 
 void Note::draw(void){
@@ -53,6 +54,9 @@ void Note::update(void){
 	point center = getCenter();
 	if (alive) {
 		Sprite::update();
+		if (opacity < 255) {
+			opacity = std::min(opacity + 16, 255);
+		}
 
 		if ((center.x>>FPSH) < pos_min_x) {
 			alive = false;
