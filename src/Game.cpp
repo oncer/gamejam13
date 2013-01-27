@@ -167,16 +167,21 @@ void Game::run(void)
 			frames_drawn++;
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 
+			
 			// DRAW SPRITES
-			background.draw();
-			player.draw();
-			demon.draw();
-			song.drawNotes();
-			particles.draw();
-			stave.draw();
-
-			//filters
-			filterDark.draw();
+			if (!gameover) {
+				background.draw();
+				player.draw();
+				demon.draw();
+				song.drawNotes();
+				particles.draw();
+				stave.draw();
+				
+				filterDark.draw();
+			}
+			if(gameover) {
+				gameOverBg.draw();
+			}
 			filterFilm.draw();
 
 
