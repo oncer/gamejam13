@@ -56,9 +56,8 @@ void Note::update(void){
 
 		if ((center.x>>FPSH) < pos_min_x) {
 			alive = false;
+			g_game->failnote(*this, (s32)type);
 			//note death
-			g_game->getDemon().happy(64);
-			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, getCenter());
 		}
 		
 		Stave& stave = g_game->getStave();

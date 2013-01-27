@@ -14,6 +14,7 @@ class SND
 		static void heartbeat();
 		static void timbal();
 		static void dead();
+		static void failnote();
 		static void ambient(int type);
 		static void startLoopedAmbient(void);
 		static void startLoopedTreble(void);
@@ -27,6 +28,7 @@ class SND
 		static ALLEGRO_SAMPLE* s_hitnote;
 		static ALLEGRO_SAMPLE* s_timbal;
 		static ALLEGRO_SAMPLE* s_dead;
+		static ALLEGRO_SAMPLE* s_failnote;
 		
 		static ALLEGRO_SAMPLE_INSTANCE* i_treble;
 	private:

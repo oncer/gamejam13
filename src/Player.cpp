@@ -36,11 +36,13 @@ void Player::draw(void) {
 }
 
 void Player::pump(void) {
-	setState(PUMP);
-	ParticleEmitter& particles = g_game->getParticles();
-	point effectPos = {pos.x + 47*PX, pos.y + 19*PX};
-	particles.addEffect(EFFECT_BLOODSQUIRT, effectPos);
-	SND::heartbeat();
+	if (state != PUMP) {
+		setState(PUMP);
+		ParticleEmitter& particles = g_game->getParticles();
+		point effectPos = {pos.x + 47*PX, pos.y + 19*PX};
+		particles.addEffect(EFFECT_BLOODSQUIRT, effectPos);
+		SND::heartbeat();
+	}
 }
 
 void Player::update(void) {
