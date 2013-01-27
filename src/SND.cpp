@@ -7,6 +7,7 @@ ALLEGRO_SAMPLE *SND::s_background;
 ALLEGRO_SAMPLE *SND::s_ambient[] = {NULL, NULL, NULL};
 ALLEGRO_SAMPLE *SND::s_heartbeat;
 ALLEGRO_SAMPLE *SND::s_dead;
+ALLEGRO_SAMPLE *SND::s_failnote;
 ALLEGRO_SAMPLE_INSTANCE *SND::i_treble;
 
 static ALLEGRO_SAMPLE* _loadSample(const char* f) {
@@ -27,6 +28,7 @@ void SND::load()
 	s_dead = _loadSample("sfx/dead.ogg");
 	s_hitnote = _loadSample("sfx/catchnote.ogg");
 	s_timbal = _loadSample("sfx/timbal.ogg");
+	s_failnote = _loadSample("sfx/failnote.ogg");
 
 	i_treble = al_create_sample_instance(_loadSample("sfx/hightremolo.ogg"));
 	al_attach_sample_instance_to_mixer(i_treble, al_get_default_mixer());
@@ -83,6 +85,11 @@ void SND::hitnote(int pitch)
 	if (pitch >= 0 && pitch < 5) {
 		al_play_sample(s_hitnote, 1.0, 0.0, pitch_table[pitch], ALLEGRO_PLAYMODE_ONCE, NULL);
 	}
+}
+
+void SND::failnote()
+{
+	al_play_sample(s_failnote, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 // untertöne: F G A

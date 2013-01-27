@@ -2,6 +2,9 @@
 #include "GFX.h"
 #include "Globals.h"
 
+const int minPitch = -1;
+const int maxPitch = 4;
+
 Stave::Stave(void)
 {
 	display_offset.x = 0;
@@ -16,15 +19,13 @@ Stave::Stave(void)
 	anim = true;
 	
 	state = STATE_IDLE;
+	selectedPitch = 2;
 }
 
 
 Stave::~Stave(void)
 {
 }
-
-const int minPitch = -1;
-const int maxPitch = 4;
 
 void Stave::update(void){
 	Sprite::update();
@@ -82,6 +83,13 @@ bool Stave::hitNote(const Note& note)
 				note0.collide(note);
 			} else {
 				note1.collide(note);
+			}
+			if (note0.getValue() == note1.getValue() &&
+					note0.getValue() != -1) {
+				note0.setValue(-1);
+				note1.setValue(-1);
+				g_game->hitnote(note0, randint(0,5));
+				g_game->hitnote(note1, randint(0,5));
 			}
 			return true;
 		}
@@ -144,27 +152,9 @@ void StaveNote::collide(const Note& note)
 		value = (s32)note.getType();
 	} else if (value == (s32)note.getType()) {
 		value = -1;
-		SND::hitnote(note.getPitch());
-		EffectType effectType;
-		switch (note.getPitch()) {
-			case 0: effectType = EFFECT_NOTE1; break;
-			case 1: effectType = EFFECT_NOTE2; break;
-			case 2: effectType = EFFECT_NOTE3; break;
-			case 3: effectType = EFFECT_NOTE4; break;
-			case 4: effectType = EFFECT_NOTE5; break;
-		}
-
-		g_game->getParticles().addEffect(effectType, getCenter());
+		g_game->hitnote(*this, note.getPitch());
 	} else {
-		Particle::ParticleType particleType;
-		switch (value) {
-			case 0: particleType = Particle::NOTEHEAD1; break;
-			case 1: particleType = Particle::NOTEHEAD2; break;
-		}
-		Particle* p = g_game->getParticles().addParticle(particleType);
-		p->setCenter(getCenter());
-		p->setAcceleration(0, PX/8); // gravity
-		value = (s32)note.getType();
+		g_game->failnote(*this, (s32)note.getType());
 	}
 }
 

@@ -33,7 +33,7 @@ class Note :
 
 	protected:
 		static const int pos_max_x = 392;
-		static const int pos_min_x = 8;
+		static const int pos_min_x = 16;
 		static const int hitpos_max_x = 60;
 		static const int hitpos_min_x = 40;
 

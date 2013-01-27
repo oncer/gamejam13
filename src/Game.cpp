@@ -144,6 +144,7 @@ void Game::run(void)
 				particles.update();
 				demon.update();
 				ambient.update();
+				heartbeat.update();
 			}
 			filterFilm.update();
 			// END OF GAME LOGIC
@@ -161,6 +162,7 @@ void Game::run(void)
 				demon.draw();
 				song.drawNotes();
 				particles.draw();
+				heartbeat.draw();
 				stave.draw();
 				
 				filterDark.draw();
@@ -198,5 +200,36 @@ void Game::run(void)
 
 void Game::setGameover(bool gameover) {
 	this->gameover = gameover;
+}
+
+void Game::failnote(const Sprite& s, s32 type)
+{
+	demon.happy(64);
+	particles.addEffect(EFFECT_OBSTACLE, s.getCenter());
+	Particle::ParticleType particleType;
+	switch (type) {
+		case 0: particleType = Particle::NOTEHEAD1; break;
+		case 1: particleType = Particle::NOTEHEAD2; break;
+	}
+	Particle* p = particles.addParticle(particleType);
+	p->setCenter(s.getCenter());
+	p->setAcceleration(0, PX/8); // gravity
+	SND::failnote();
+}
+
+void Game::hitnote(const Sprite& s, s32 pitch)
+{
+	SND::hitnote(pitch);
+	EffectType effectType;
+	switch (pitch) {
+		case 0: effectType = EFFECT_NOTE1; break;
+		case 1: effectType = EFFECT_NOTE2; break;
+		case 2: effectType = EFFECT_NOTE3; break;
+		case 3: effectType = EFFECT_NOTE4; break;
+		case 4: effectType = EFFECT_NOTE5; break;
+	}
+	particles.addEffect(effectType, s.getCenter());
+	player.pump();
+	heartbeat.startPulse();
 }
 

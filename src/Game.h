@@ -13,6 +13,7 @@
 #include "Ambient.h"
 #include "util.h"
 #include "GameOverBg.h"
+#include "Heartbeat.h"
 
 class Game
 {
@@ -31,6 +32,9 @@ class Game
 		FilterDark& getFilterDark() { return filterDark; }
 		Demon& getDemon() { return demon; }
 
+		void failnote(const Sprite& s, s32 type);
+		void hitnote(const Sprite& s, s32 pitch);
+
     protected:
         ALLEGRO_TIMER* timer;
 
@@ -43,6 +47,7 @@ class Game
 		FilterFilm filterFilm;
 		Song song;
 		ParticleEmitter particles;
+		Heartbeat heartbeat;
 
 		s32 frameID;
 		Player player;
