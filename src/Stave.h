@@ -3,6 +3,23 @@
 #include "Sprite.h"
 #include "Note.h"
 
+class StaveNote : public Sprite
+{
+	public:
+		StaveNote(void);
+		~StaveNote(void);
+
+		void update();
+		void draw();
+
+		s32 getValue() const { return value; }
+		void setValue(s32 v) { value = v; }
+		void collide(const Note& note);
+		
+	protected:
+		s32 value;
+};
+
 class Stave :
 	public Sprite
 {
@@ -22,7 +39,7 @@ public:
 protected:
 	s32 state;
 	s32 selectedPitch; // (-1)..(4)
-	s32 note0, note1;
+	StaveNote note0, note1;
 	s32 combo;
 };
 
