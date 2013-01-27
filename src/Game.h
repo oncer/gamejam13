@@ -12,6 +12,7 @@
 #include "FilterFilm.h"
 #include "Ambient.h"
 #include "util.h"
+#include "GameOverBg.h"
 
 class Game
 {
@@ -37,6 +38,7 @@ class Game
 
 		Stave stave;
 		Background background;
+		GameOverBg gameOverBg;
 		FilterDark filterDark;
 		FilterFilm filterFilm;
 		Song song;

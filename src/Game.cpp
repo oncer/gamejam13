@@ -8,17 +8,8 @@ Game::Game(void) :
 	timer(NULL),
 	paused(false),
 	playtime(0),
-	gameover(false),
-	song("e78d78e78c7d7e78a7h7a788c7a78d7e78h78a7c78e78c7a78h7a7a78c788d7")
-	//song("e34d34e34c3d3e34a3h3a344c3a34d3e12h12a1c12e12c1a12h1a1a12c122d1")
-	//song("dhdhdhdhdhdhdhdhd")
-	//song("ccccccccccccccccc")
-	//song("e1a3e1a3e1a3e1a3e1a3e1a3")
-	//song("headache")
-	//song(get_file_contents("song.txt"))
+	gameover(false)
 {
-
-	std::cout<<"Song: " << song.getText() << std::endl;
 }
 
 Game::~Game(void)
@@ -162,16 +153,21 @@ void Game::run(void)
 			frames_drawn++;
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 
+			
 			// DRAW SPRITES
-			background.draw();
-			player.draw();
-			demon.draw();
-			song.drawNotes();
-			particles.draw();
-			stave.draw();
-
-			//filters
-			filterDark.draw();
+			if (!gameover) {
+				background.draw();
+				player.draw();
+				demon.draw();
+				song.drawNotes();
+				particles.draw();
+				stave.draw();
+				
+				filterDark.draw();
+			}
+			if(gameover) {
+				gameOverBg.draw();
+			}
 			filterFilm.draw();
 
 

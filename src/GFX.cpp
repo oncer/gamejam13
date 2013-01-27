@@ -28,6 +28,7 @@ void BitmapLib::LOAD(const char* id, const char* fname)
 void BitmapLib::load()
 {
     LOAD("background",      "gfx/background.png");
+    LOAD("gameover",        "gfx/gameover.png");
     LOAD("demon",           "gfx/demon.png");
     LOAD("font0",           "gfx/font.png");
     LOAD("notes",           "gfx/notes.png");
