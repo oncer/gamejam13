@@ -53,6 +53,9 @@ class Game
 		Player player;
 		Demon demon;
 
+		s32 score;
+		s32 combo;
+
         bool paused;
 		unsigned int playtime;
 		bool gameover;
