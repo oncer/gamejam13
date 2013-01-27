@@ -5,6 +5,8 @@ float Song::bar_generator1_placement[] = {1.0f, 0.05f, 0.3f, 0.05f, 0.4f, 0.05f,
 float Song::bar_generator1_pitch[] = {0.2f,0.4f,0.6f,0.8f}; //note: cummulative probability, fith element would be sum = 1
 float Song::bar_generator2_placement[] = {1.0f, 0.3f, 0.5f, 0.2f, 0.7f, 0.2f, 0.5f, 0.3f};
 float Song::bar_generator2_pitch[] = {0.3f,0.4f,0.6f,0.7f}; 
+float Song::bar_generator3_placement[] = {1.0f, 0.4f, 0.6f, 0.3f, 0.8f, 0.3f, 0.6f, 0.4f};
+float Song::bar_generator3_pitch[] = {0.4f,0.5f,0.6f,0.7f}; 
 //float Song::bar_generator1_placement[] = {0.5f, 0.025f, 0.15f, 0.025f, 0.2f, 0.025f, 0.15f, 0.025f};
 //float Song::bar_generator2_placement[] = {0.5f, 0.15f, 0.25f, 0.1f, 0.35f, 0.1f, 0.25f, 0.15f};
 
@@ -15,7 +17,6 @@ Song::Song()
 	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
 	backgroundNote = 0;
 	difficulty = EASY;
-	//generateNextBar();
 
 	for (int i = 0; i < 8; i++) {
 		next_bar_pitch[i] = Note::Pitch::NONE;
@@ -30,6 +31,8 @@ void Song::update(void) {
 	
 	
 	frame_counter++;
+	if(difficulty == HARD) frame_counter++;
+
 	if(frame_counter >= frames_per_16beat) {
 		//Beat
 			
@@ -45,11 +48,12 @@ void Song::update(void) {
 			beat_counter = 0;
 
 			bar_counter++;
-			if (bar_counter == 7) {
-				if (difficulty == EASY) {
-					difficulty = MEDIUM;
-					std::cout<<"Switching to MEDIUM difficulty!"<<std::endl;
-				}
+			if (bar_counter == 7 && difficulty == EASY) {
+				difficulty = MEDIUM;
+				std::cout<<"Switching to MEDIUM difficulty!"<<std::endl;
+			} else if (bar_counter == 15 && difficulty == MEDIUM) {
+				difficulty = HARD;
+				std::cout<<"Switching to HARD difficulty!"<<std::endl;
 			}
 			
 			generateNextBar();
@@ -100,7 +104,6 @@ void Song::drawNotes(void){
 }
 
 void Song::generateNextBar(void){
-	std::cout<<"Generating rand bar with difficulty "<<difficulty<<std::endl;
 	std::stringstream bar_string;
 	bar_string << "Bar: ";
 	for (int i = 0; i < 8; i++) { //for each 1/8 beat
@@ -109,8 +112,10 @@ void Song::generateNextBar(void){
 		bool place_note;
 		if(difficulty == EASY) {
 			place_note = placement_seed < bar_generator1_placement[i]; //e.g. 0.4f < 1.0f --> 100%, 0.6f < 0.3f --> note not placed
-		} else {
+		} else if (difficulty == MEDIUM) {
 			place_note = placement_seed < bar_generator2_placement[i];
+		} else {
+			place_note = placement_seed < bar_generator3_placement[i];
 		}
 		//std::cout<<"rand__ seed: "<<placement_seed<<" prob: "<<bar_generator1_placement[i]<<" place: "<<place_note<<std::endl;
 		bar_string << place_note;
@@ -132,7 +137,7 @@ void Song::generateNextBar(void){
 				} else {
 					next_bar_pitch[i] = Note::A;
 				}
-			} else {
+			} else if(difficulty == MEDIUM) {
 				if (pitch_seed < bar_generator2_pitch[0]) {
 					next_bar_pitch[i] = Note::E;
 				} else if (pitch_seed < bar_generator2_pitch[1]) {
@@ -140,6 +145,18 @@ void Song::generateNextBar(void){
 				} else if (pitch_seed < bar_generator2_pitch[2]) {
 					next_bar_pitch[i] = Note::C;
 				} else if (pitch_seed < bar_generator2_pitch[3]) {
+					next_bar_pitch[i] = Note::H;
+				} else {
+					next_bar_pitch[i] = Note::A;
+				}
+			} else {
+				if (pitch_seed < bar_generator3_pitch[0]) {
+					next_bar_pitch[i] = Note::E;
+				} else if (pitch_seed < bar_generator3_pitch[1]) {
+					next_bar_pitch[i] = Note::D;
+				} else if (pitch_seed < bar_generator3_pitch[2]) {
+					next_bar_pitch[i] = Note::C;
+				} else if (pitch_seed < bar_generator3_pitch[3]) {
 					next_bar_pitch[i] = Note::H;
 				} else {
 					next_bar_pitch[i] = Note::A;
@@ -153,6 +170,6 @@ void Song::generateNextBar(void){
 
 	}
 	
-	std::cout<<bar_string.str()<<std::endl;
+	//std::cout<<bar_string.str()<<std::endl;
 	//std::cout<<"Generated Bar: "<<next_bar_pitch[0]<<" "<<next_bar_pitch[1]<<" "<<next_bar_pitch[2]<<" "<<next_bar_pitch[3]<<" "<<next_bar_pitch[4]<<" "<<next_bar_pitch[5]<<" "<<next_bar_pitch[6]<<" "<<next_bar_pitch[7]<<std::endl;
 }

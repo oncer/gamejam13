@@ -15,13 +15,16 @@ class Song {
 		
 		enum Difficulty {
 			EASY = 0,
-			MEDIUM = 1
+			MEDIUM = 1,
+			HARD = 2
 		};
 		
 		static float bar_generator1_placement[];
 		static float bar_generator1_pitch[];
 		static float bar_generator2_placement[];
 		static float bar_generator2_pitch[];
+		static float bar_generator3_placement[];
+		static float bar_generator3_pitch[];
 
 		void generateNextBar(void);
 
