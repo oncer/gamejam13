@@ -7,13 +7,13 @@ float Song::bar_generator2_placement[] = {1.0f, 0.3f, 0.5f, 0.2f, 0.7f, 0.2f, 0.
 float Song::bar_generator2_pitch[] = {0.3f,0.4f,0.6f,0.7f}; 
 
 Song::Song()
-	:notes(128), bpm(120), frames_per_16beat(bpm_to_frames(120)/2), bar_counter(0)
+	:notes(128), bpm(120), frames_per_16beat(bpm_to_frames(120)/2), bar_counter(0), beat_counter(0)
 {
 	frame_counter = frames_per_16beat;
 	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
 	backgroundNote = 0;
 	difficulty = EASY;
-	generateNextBar();
+	//generateNextBar();
 }
 
 Song::~Song(void){
@@ -26,6 +26,8 @@ void Song::update(void) {
 	frame_counter++;
 	if(frame_counter >= frames_per_16beat) {
 		//Beat
+			
+
 		if(beat_counter%4 == 0) {
 			SND::timbal();
 		}
@@ -33,24 +35,25 @@ void Song::update(void) {
 			backgroundNote += randint(1,3);
 			backgroundNote %= 3;
 			SND::background(backgroundNote);
+
 			beat_counter = 0;
 
 			bar_counter++;
-			generateNextBar();
-			if (bar_counter == 8) {
+			if (bar_counter == 7) {
 				if (difficulty == EASY) {
 					difficulty = MEDIUM;
 					std::cout<<"Switching to MEDIUM difficulty!"<<std::endl;
 				}
 			}
+			
+			generateNextBar();
 		}
-		beat_counter++;
-
-		frame_counter = 0;
 		
-		//TODO SPAWN NOTE
 		
 		Note::Pitch pitch = next_bar_pitch[beat_counter];
+
+		beat_counter++;
+		frame_counter = 0;
 
 		if(pitch != Note::Pitch::NONE) {
 
@@ -92,6 +95,8 @@ void Song::drawNotes(void){
 
 void Song::generateNextBar(void){
 	std::cout<<"Generating rand bar with difficulty "<<difficulty<<std::endl;
+	std::stringstream bar_string;
+	bar_string << "Bar: ";
 	for (int i = 0; i < 8; i++) { //for each 1/8 beat
 
 		float placement_seed = ( (float)randint(0,100) ) / 100;
@@ -101,7 +106,8 @@ void Song::generateNextBar(void){
 		} else {
 			place_note = placement_seed < bar_generator2_placement[i];
 		}
-		std::cout<<"rand__ seed: "<<placement_seed<<" prob: "<<bar_generator1_placement[i]<<" place: "<<place_note<<std::endl;
+		//std::cout<<"rand__ seed: "<<placement_seed<<" prob: "<<bar_generator1_placement[i]<<" place: "<<place_note<<std::endl;
+		bar_string << place_note;
 
 		if (place_note) {
 			//find random pitch 
@@ -138,7 +144,9 @@ void Song::generateNextBar(void){
 		} else {
 			next_bar_pitch[i] = Note::Pitch::NONE;
 		}
-	}
 
+	}
+	
+	std::cout<<bar_string.str()<<std::endl;
 	//std::cout<<"Generated Bar: "<<next_bar_pitch[0]<<" "<<next_bar_pitch[1]<<" "<<next_bar_pitch[2]<<" "<<next_bar_pitch[3]<<" "<<next_bar_pitch[4]<<" "<<next_bar_pitch[5]<<" "<<next_bar_pitch[6]<<" "<<next_bar_pitch[7]<<std::endl;
 }
