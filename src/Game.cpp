@@ -139,9 +139,13 @@ void Game::run(void)
 				if (opp) {
 					al_scale_transform(&transform, (double)al_get_display_width(display)/(double)WIDTH, (double)al_get_display_height(display)/(double)HEIGHT);
 				} else {
+					al_resize_display(display, WIDTH*2, HEIGHT*2);
 					al_scale_transform(&transform, 2.0, 2.0);
 				}
 				al_use_transform(&transform);
+			}
+			if (KBD::JustPressed(KBD::KEY_EXIT)) {
+				running = false;
 			}
 
 			frame_counter++;
