@@ -7,15 +7,28 @@ class Note :
 	public Sprite
 {
 	public:
+		enum Type {
+			NOTE_1 = 0,
+			NOTE_2 = 1
+		};
+
+		enum Pitch {
+			E = 0,
+			D = 1,
+			C = 2,
+			H = 3,
+			A = 4
+		};
+
 		Note(void);
 		~Note(void);
 		void draw(void);
 		void update(void);
-		void respawn(int _pitch, bool isObstacle);
+		void respawn(Pitch _pitch, Type _type);
 		bool isAlive(void);
 
-		int getPitch() const { return pitch; }
-		bool isObstacle(void) const { return obstacle; }
+		Pitch getPitch() const { return pitch; }
+		Type getType() const { return type; }
 
 	protected:
 		static const int pos_max_x = 392;
@@ -24,8 +37,8 @@ class Note :
 		static const int hitpos_min_x = 40;
 
 		bool alive;
-		bool obstacle;
 
-		int pitch;
+		Type type;
+		Pitch pitch;
 
 };
