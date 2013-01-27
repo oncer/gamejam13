@@ -23,4 +23,5 @@ class Song {
 		bool nextNoteIsObstacle;
 		//spawned notes
 		std::vector<Note> notes;
+		s32 backgroundNote;
 };
