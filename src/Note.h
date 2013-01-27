@@ -13,6 +13,7 @@ class Note :
 		};
 
 		enum Pitch {
+			NONE = -1,
 			E = 0,
 			D = 1,
 			C = 2,

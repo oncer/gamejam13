@@ -111,9 +111,7 @@ bool Stave::hitNote(const Note& note)
 	rect coll = get_collision(pos, noteRect);
 	bool hit = is_collision(coll);
 	if (hit) {
-		if (note.isObstacle()) {
-			combo = 0;
-		} else combo++;
+		combo++;
 	}
 	return hit;
 }
