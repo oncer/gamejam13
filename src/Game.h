@@ -14,16 +14,22 @@
 #include "util.h"
 #include "GameOverBg.h"
 #include "Heartbeat.h"
+#include "Menu.h"
 
 class Game
 {
     public:
         Game(void);
         ~Game(void);
+		enum Gamestate {
+			MENU,
+			GAME,
+			GAMEOVER
+		};
 
         void pause(bool enabled);
         void run(void);
-		void setGameover(bool gameover);
+		void setGamestate(Gamestate state);
 
 		s32 getCurrentFrameID() { return frameID; }
 
@@ -37,6 +43,9 @@ class Game
 
     protected:
         ALLEGRO_TIMER* timer;
+
+		Gamestate state;
+		Menu menu;
 
 		Ambient ambient;
 
@@ -58,7 +67,6 @@ class Game
 
         bool paused;
 		unsigned int playtime;
-		bool gameover;
 };
 
 #endif
