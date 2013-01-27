@@ -58,26 +58,13 @@ void Note::update(void){
 			alive = false;
 			//note death
 			g_game->getDemon().happy(64);
-			point effectPos = {pos.x + 16*PX, pos.y + 15*PX};
-			
-			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, effectPos);
+			g_game->getParticles().addEffect(EFFECT_BLOODSQUIRT, getCenter());
 		}
 		
 		Stave& stave = g_game->getStave();
 		if (alive && stave.hitNote(*this)) {
-			SND::hitnote(pitch);
 			alive = false;
 			//g_game->getDemon().hurt(1);
-			EffectType effectType;
-			switch (pitch) {
-				case 0: effectType = EFFECT_NOTE1; break;
-				case 1: effectType = EFFECT_NOTE2; break;
-				case 2: effectType = EFFECT_NOTE3; break;
-				case 3: effectType = EFFECT_NOTE4; break;
-				case 4: effectType = EFFECT_NOTE5; break;
-			}
-
-			g_game->getParticles().addEffect(effectType, getCenter());
 		}
 	}
 }

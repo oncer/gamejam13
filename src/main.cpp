@@ -5,6 +5,7 @@ Game* g_game;
 
 int main(int argc, char** argv)
 {
+	srand(time(0));
  	g_game = new Game();
 
 	try {
