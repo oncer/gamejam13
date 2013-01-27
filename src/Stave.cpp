@@ -157,7 +157,6 @@ void StaveNote::collide(const Note& note)
 		g_game->hitnote(*this, note.getPitch());
 	} else {
 		g_game->failnote(*this, (s32)note.getType());
-		std::cout << "collide failnote" << std::endl;
 	}
 }
 

@@ -225,7 +225,7 @@ void Game::setGamestate(Gamestate state) {
 
 void Game::failnote(const Sprite& s, s32 type)
 {
-	demon.happy(32);
+	demon.happy(64);
 	particles.addEffect(EFFECT_OBSTACLE, s.getCenter());
 	Particle::ParticleType particleType;
 	switch (type) {
@@ -256,6 +256,5 @@ void Game::hitnote(const Sprite& s, s32 pitch)
 	combo++;
 	if (combo > maxCombo) maxCombo = combo;
 	score += combo;
-	std::cout << "score + " << combo << " = " << score << std::endl;
 }
 

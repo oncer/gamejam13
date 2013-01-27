@@ -61,7 +61,6 @@ void Note::update(void){
 		if ((center.x>>FPSH) < pos_min_x) {
 			alive = false;
 			g_game->failnote(*this, (s32)type);
-			std::cout << "bounds failnote" << std::endl;
 			//note death
 		}
 		
