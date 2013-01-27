@@ -117,7 +117,7 @@ void SND::heartbeat() {
 }
 
 void SND::timbal() {
-	al_play_sample(s_timbal, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+	al_play_sample(s_timbal, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
 }
 
 

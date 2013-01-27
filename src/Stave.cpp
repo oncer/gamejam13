@@ -86,7 +86,6 @@ void Stave::update(void){
 	}
 
 	if (combo > 0 && state == STATE_IDLE) {
-		std::cout << "combo: " << combo << std::endl;
 		combo = 0;
 	}
 }
