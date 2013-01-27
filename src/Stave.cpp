@@ -78,7 +78,7 @@ bool Stave::hitNote(const Note& note)
 	s32 noteX = note.getCenter().x;
 	s32 noteVelX = note.getVelocity().x;
 	if (note.getPitch() == (selectedPitch) || note.getPitch() == (selectedPitch + 1)) {
-		if (noteX <= hitX && (noteX - noteVelX) > hitX) {
+		if (noteX <= hitX && (noteX - noteVelX) > (hitX - PX*16)) {
 			if (note.getPitch() == selectedPitch) {
 				note0.collide(note);
 			} else {

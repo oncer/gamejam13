@@ -13,8 +13,15 @@ class Song {
 
 	protected:
 		
+		enum Difficulty {
+			EASY = 0,
+			MEDIUM = 1
+		};
+		
 		static float bar_generator1_placement[];
 		static float bar_generator1_pitch[];
+		static float bar_generator2_placement[];
+		static float bar_generator2_pitch[];
 
 		void generateNextBar(void);
 
@@ -22,7 +29,10 @@ class Song {
 		const unsigned int frames_per_16beat; //derived from bpm and fps
 		unsigned int frame_counter; //count of frames at 1/8 position
 		unsigned int beat_counter;
+		unsigned int bar_counter;
 		Note::Pitch next_bar_pitch[8]; //pitches for the next bar
+		Difficulty difficulty;
+
 
 		//spawned notes
 		std::vector<Note> notes;
