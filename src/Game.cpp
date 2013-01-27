@@ -135,6 +135,13 @@ void Game::run(void)
 			if (KBD::JustPressed(KBD::KEY_FULLSCREEN)) {
 				bool opp = !(al_get_display_flags(display) & ALLEGRO_FULLSCREEN_WINDOW);
 				al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, opp);
+				al_identity_transform(&transform);
+				if (opp) {
+					al_scale_transform(&transform, (double)al_get_display_width(display)/(double)WIDTH, (double)al_get_display_height(display)/(double)HEIGHT);
+				} else {
+					al_scale_transform(&transform, 2.0, 2.0);
+				}
+				al_use_transform(&transform);
 			}
 
 			frame_counter++;
