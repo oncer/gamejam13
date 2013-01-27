@@ -17,7 +17,9 @@ public:
 		NOTE3,
 		NOTE4,
 		NOTE5,
-		OBSTACLE
+		OBSTACLE,
+		NOTEHEAD1,
+		NOTEHEAD2
     };
 
     Particle();

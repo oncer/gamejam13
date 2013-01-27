@@ -8,7 +8,12 @@ Stave::Stave(void)
 	display_offset.y = -8;
 	pos.w = (32<<FPSH);
 	pos.h = (48<<FPSH);
-	add_sprite_rect("cursor",0,0,32,64);
+	add_sprite_rect("cursor", 0,0,32,64);
+	add_sprite_rect("cursor",32,0,32,64);
+	add_sprite_rect("cursor",64,0,32,64);
+	anim_frames = 3;
+	anim_frame_duration = 5;
+	anim = true;
 	
 	state = STATE_IDLE;
 }
@@ -139,9 +144,27 @@ void StaveNote::collide(const Note& note)
 		value = (s32)note.getType();
 	} else if (value == (s32)note.getType()) {
 		value = -1;
+		SND::hitnote(note.getPitch());
+		EffectType effectType;
+		switch (note.getPitch()) {
+			case 0: effectType = EFFECT_NOTE1; break;
+			case 1: effectType = EFFECT_NOTE2; break;
+			case 2: effectType = EFFECT_NOTE3; break;
+			case 3: effectType = EFFECT_NOTE4; break;
+			case 4: effectType = EFFECT_NOTE5; break;
+		}
+
+		g_game->getParticles().addEffect(effectType, getCenter());
 	} else {
+		Particle::ParticleType particleType;
+		switch (value) {
+			case 0: particleType = Particle::NOTEHEAD1; break;
+			case 1: particleType = Particle::NOTEHEAD2; break;
+		}
+		Particle* p = g_game->getParticles().addParticle(particleType);
+		p->setCenter(getCenter());
+		p->setAcceleration(0, PX/8); // gravity
 		value = (s32)note.getType();
-		// hurt
 	}
 }
 

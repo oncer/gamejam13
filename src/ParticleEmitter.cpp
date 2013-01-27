@@ -195,6 +195,43 @@ void Particle::init(ParticleType type)
 			add_sprite_rect("particles", 8, 56, 8, 8);
 			add_sprite_rect("particles",16, 56, 8, 8);
 			add_sprite_rect("particles",24, 56, 8, 8);
+			break;
+		}
+		case NOTEHEAD1:
+		{
+			display_offset.x = -8;
+			display_offset.y = -10;
+			pos.w = (14<<FPSH);
+			pos.h = (12<<FPSH);
+			anim_wait = anim_delay = 4;
+			alive = true;
+			collisionResponse = false;
+			looping = true;
+			fadeout = 2;
+			autorotate = false;
+			// white
+			add_sprite_rect("cursor", 0, 64, 32, 32);
+			add_sprite_rect("cursor",32, 64, 32, 32);
+			add_sprite_rect("cursor",64, 64, 32, 32);
+			break;
+		}
+		case NOTEHEAD2:
+		{
+			display_offset.x = -8;
+			display_offset.y = -10;
+			pos.w = (14<<FPSH);
+			anim_wait = anim_delay = 4;
+			alive = true;
+			collisionResponse = false;
+			pos.h = (12<<FPSH);
+			looping = true;
+			fadeout = 2;
+			autorotate = false;
+			// black
+			add_sprite_rect("cursor", 0, 96, 32, 32);
+			add_sprite_rect("cursor",32, 96, 32, 32);
+			add_sprite_rect("cursor",64, 96, 32, 32);
+			break;
 		}
 	}
 }
