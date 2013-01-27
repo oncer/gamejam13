@@ -5,9 +5,11 @@ float Song::bar_generator1_placement[] = {1.0f, 0.05f, 0.3f, 0.05f, 0.4f, 0.05f,
 float Song::bar_generator1_pitch[] = {0.2f,0.4f,0.6f,0.8f}; //note: cummulative probability, fith element would be sum = 1
 float Song::bar_generator2_placement[] = {1.0f, 0.3f, 0.5f, 0.2f, 0.7f, 0.2f, 0.5f, 0.3f};
 float Song::bar_generator2_pitch[] = {0.3f,0.4f,0.6f,0.7f}; 
+//float Song::bar_generator1_placement[] = {0.5f, 0.025f, 0.15f, 0.025f, 0.2f, 0.025f, 0.15f, 0.025f};
+//float Song::bar_generator2_placement[] = {0.5f, 0.15f, 0.25f, 0.1f, 0.35f, 0.1f, 0.25f, 0.15f};
 
 Song::Song()
-	:notes(128), bpm(120), frames_per_16beat(bpm_to_frames(120)/2), bar_counter(0), beat_counter(0)
+	:notes(128), bpm(120), frames_per_16beat(bpm_to_frames(120)), bar_counter(0), beat_counter(0)
 {
 	frame_counter = frames_per_16beat;
 	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
