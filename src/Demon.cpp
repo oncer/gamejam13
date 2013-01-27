@@ -62,6 +62,7 @@ void Demon::update(void){
 			opacity = 255;
 			g_game->setGameover(true);
 			SND::stopLoopedTreble();
+			SND::scream();
 		} else opacity = (int) (255 * ((double)(100-pxpos))/50);
 
 		FilterDark& filter = g_game->getFilterDark();

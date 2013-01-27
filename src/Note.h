@@ -11,10 +11,11 @@ class Note :
 		~Note(void);
 		void draw(void);
 		void update(void);
-		void respawn(int _pitch);
+		void respawn(int _pitch, bool isObstacle);
 		bool isAlive(void);
 
 		int getPitch() const { return pitch; }
+		bool isObstacle(void) const { return obstacle; }
 
 	protected:
 		static const int pos_max_x = 392;
@@ -23,6 +24,7 @@ class Note :
 		static const int hitpos_min_x = 40;
 
 		bool alive;
+		bool obstacle;
 
 		int pitch;
 

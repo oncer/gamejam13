@@ -19,6 +19,7 @@
 #include <cmath>
 #include <cstdio>
 
+
 #if _MSC_VER
 #define snprintf _snprintf
 #endif
