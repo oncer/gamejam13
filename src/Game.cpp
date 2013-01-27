@@ -8,7 +8,7 @@ Game::Game(void) :
 	timer(NULL),
 	paused(false),
 	playtime(0),
-	state(Gamestate::MENU)
+	state(MENU)
 {
 	score = 0;
 	combo = 0;
@@ -189,9 +189,11 @@ void Game::run(void)
 			//char c_fps[20];
 			//snprintf(c_fps, 20, "@%d@", fps);
 			//GFX::text(FONT_DEFAULT, 360, 220, c_fps);
-			char c_fps[20];
-			snprintf(c_fps, 20, "@%d@", playtime);
-			GFX::text(FONT_DEFAULT, 360, 220, c_fps);
+			if (state == GAME) {
+				char c_stats[100];
+				snprintf(c_stats, 100, "SCORE: %05d     COMBO:%03d     TIME: %05d", score, combo, playtime);
+				GFX::text(FONT_DEFAULT, 50, 220, c_stats);
+			}
 
 
 			al_flip_display();
@@ -242,5 +244,8 @@ void Game::hitnote(const Sprite& s, s32 pitch)
 	particles.addEffect(effectType, s.getCenter());
 	player.pump();
 	heartbeat.startPulse();
+	combo++;
+	score += combo;
+	std::cout << "score + " << combo << " = " << score << std::endl;
 }
 

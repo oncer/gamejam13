@@ -19,6 +19,6 @@ void Menu::update(void) {
 	Sprite::update();
 	if( KBD::IsKeyPressed(KBD::KEY_ACTION)) { 
 		//start game
-		g_game->setGamestate(Game::Gamestate::GAME);
+		g_game->setGamestate(Game::GAME);
 	}
 }
