@@ -19,6 +19,7 @@ void KBD::Update()
 	if (al_key_down(&kbd_state, ALLEGRO_KEY_D)) keystate |= KEY_NOTE3;
 	if (al_key_down(&kbd_state, ALLEGRO_KEY_F)) keystate |= KEY_NOTE4;
 	if (al_key_down(&kbd_state, ALLEGRO_KEY_G)) keystate |= KEY_NOTE5;
+	if (al_key_down(&kbd_state, ALLEGRO_KEY_F11)) keystate |= KEY_FULLSCREEN;
 
     keytrg = (keystate ^ previous_keystate) & keystate;
 }

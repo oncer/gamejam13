@@ -132,6 +132,11 @@ void Game::run(void)
 			
 			KBD::Update();
 
+			if (KBD::JustPressed(KBD::KEY_FULLSCREEN)) {
+				bool opp = !(al_get_display_flags(display) & ALLEGRO_FULLSCREEN_WINDOW);
+				al_toggle_display_flag(display, ALLEGRO_FULLSCREEN_WINDOW, opp);
+			}
+
 			frame_counter++;
 			if(frame_counter>= FPS) {
 				frame_counter = 0;

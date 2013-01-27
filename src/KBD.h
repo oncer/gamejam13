@@ -20,7 +20,8 @@ public:
         KEY_NOTE2   = 0x80,
         KEY_NOTE3   = 0x100,
         KEY_NOTE4   = 0x200,
-        KEY_NOTE5   = 0x400
+        KEY_NOTE5   = 0x400,
+		KEY_FULLSCREEN = 0x800
     };
 private:
     static ALLEGRO_KEYBOARD_STATE kbd_state;
