@@ -13,7 +13,7 @@ class StaveNote : public Sprite
 		void draw();
 
 		s32 getValue() const { return value; }
-		void setValue(s32 v) { value = v; }
+		void setValue(s32 v);
 		void collide(const Note& note);
 		
 	protected:

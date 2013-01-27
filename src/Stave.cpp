@@ -40,6 +40,13 @@ void Stave::update(void){
 
 	pos.x = 16*PX;
 	pos.y = (selectedPitch + 1)*PX*16;
+	point note0Center = {getCenter().x, pos.y + (16<<FPSH)};
+	note0.setCenter(note0Center);
+	point note1Center = {getCenter().x, pos.y + (32<<FPSH)};
+	note1.setCenter(note1Center);
+
+	note0.update();
+	note1.update();
 }
 
 void Stave::draw(void)
@@ -54,6 +61,8 @@ void Stave::draw(void)
 		GFX::blit_alpha("lines", rcLine, 0, 16*i, 128);
 	}
 	Sprite::draw();
+	note0.draw();
+	note1.draw();
 }
 
 bool Stave::hitNote(const Note& note)
@@ -111,6 +120,12 @@ void StaveNote::update()
 	}
 }
 
+void StaveNote::setValue(s32 v)
+{
+	value = v;
+	cur_frame = (v == 0) ? 0 : 3;
+}
+
 void StaveNote::draw()
 {
 	if (value >= 0) {
@@ -121,11 +136,11 @@ void StaveNote::draw()
 void StaveNote::collide(const Note& note)
 {
 	if (value == -1) {
-		value = note.getType();
-	} else if (value == note.getType()) {
+		value = (s32)note.getType();
+	} else if (value == (s32)note.getType()) {
 		value = -1;
 	} else {
-		value = note.getType();
+		value = (s32)note.getType();
 		// hurt
 	}
 }

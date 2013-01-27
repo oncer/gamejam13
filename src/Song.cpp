@@ -42,7 +42,7 @@ void Song::update(void) {
 		
 		Note::Pitch pitch = next_bar_pitch[beat_counter];
 
-		if(pitch != Note::Pitch::NONE) {
+		if(pitch != Note::NONE) {
 
 			SND::whistle(pitch);
 
@@ -57,9 +57,9 @@ void Song::update(void) {
 			Note::Type type;
 			float seed = ( (float)randint(0,100) ) / 100;
 			if (seed < 0.5f) {
-				type = Note::Type::NOTE_1;
+				type = Note::NOTE_1;
 			} else {
-				type = Note::Type::NOTE_2;
+				type = Note::NOTE_2;
 			}
 
 			available_note->respawn(pitch, type);
@@ -90,19 +90,19 @@ void Song::generateNextBar(void){
 			//find random pitch 
 			float pitch_seed =  ( (float)randint(0,100) ) / 100;
 			if (pitch_seed < bar_generator1_pitch[0]) {
-				next_bar_pitch[i] = Note::Pitch::E;
+				next_bar_pitch[i] = Note::E;
 			} else if (pitch_seed < bar_generator1_pitch[1]) {
-				next_bar_pitch[i] = Note::Pitch::D;
+				next_bar_pitch[i] = Note::D;
 			} else if (pitch_seed < bar_generator1_pitch[2]) {
-				next_bar_pitch[i] = Note::Pitch::C;
+				next_bar_pitch[i] = Note::C;
 			} else if (pitch_seed < bar_generator1_pitch[3]) {
-				next_bar_pitch[i] = Note::Pitch::H;
+				next_bar_pitch[i] = Note::H;
 			} else {
-				next_bar_pitch[i] = Note::Pitch::A;
+				next_bar_pitch[i] = Note::A;
 			}
 
 		} else {
-			next_bar_pitch[i] = Note::Pitch::NONE;
+			next_bar_pitch[i] = Note::NONE;
 		}
 	}
 
