@@ -48,10 +48,10 @@ void Song::update(void) {
 			beat_counter = 0;
 
 			bar_counter++;
-			if (bar_counter == 7 && difficulty == EASY) {
+			if (bar_counter == 15 && difficulty == EASY) {
 				difficulty = MEDIUM;
 				std::cout<<"Switching to MEDIUM difficulty!"<<std::endl;
-			} else if (bar_counter == 15 && difficulty == MEDIUM) {
+			} else if (bar_counter == 31 && difficulty == MEDIUM) {
 				difficulty = HARD;
 				std::cout<<"Switching to HARD difficulty!"<<std::endl;
 			}
