@@ -8,6 +8,7 @@ Song::Song(const std::string& _song)
 	frame_counter = frames_per_16beat;
 	pause_counter = 0;
 	std::cout << "frames_per_16beat: " << frames_per_16beat << std::endl;
+	backgroundNote = 0;
 }
 
 Song::~Song(void){
@@ -24,11 +25,16 @@ void Song::update(void) {
 	frame_counter++;
 	if(frame_counter >= frames_per_16beat) {
 		//Beat
-		beat_counter++;
-		if(beat_counter >= 4) {
+		if(beat_counter%4 == 0) {
 			SND::timbal();
+		}
+		if(beat_counter >= 8) {
+			backgroundNote += randint(1,3);
+			backgroundNote %= 3;
+			SND::background(backgroundNote);
 			beat_counter = 0;
 		}
+		beat_counter++;
 
 		frame_counter = 0;
 		if (pause_counter > 0) { //WAIT

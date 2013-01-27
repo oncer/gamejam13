@@ -9,13 +9,13 @@ Game::Game(void) :
 	paused(false),
 	playtime(0),
 	gameover(false),
-	//song("e78d78e78c7d7e78a7h7a788c7a78d7e78h78a7c78e78c7a78h7a7a78c788d7")
+	song("e78d78e78c7d7e78a7h7a788c7a78d7e78h78a7c78e78c7a78h7a7a78c788d7")
 	//song("e34d34e34c3d3e34a3h3a344c3a34d3e12h12a1c12e12c1a12h1a1a12c122d1")
 	//song("dhdhdhdhdhdhdhdhd")
 	//song("ccccccccccccccccc")
 	//song("e1a3e1a3e1a3e1a3e1a3e1a3")
 	//song("headache")
-	song(get_file_contents("song.txt"))
+	//song(get_file_contents("song.txt"))
 {
 
 	std::cout<<"Song: " << song.getText() << std::endl;
@@ -141,11 +141,6 @@ void Game::run(void)
 				if(frame_counter>= FPS) {
 					frame_counter = 0;
 					playtime++;
-				}
-
-				if (frameID%120 == 0) {
-					backgroundNote = (backgroundNote + randint(1,3)) % 3;
-					SND::background(backgroundNote);
 				}
 
 				KBD::Update();

@@ -71,7 +71,6 @@ void Note::update(void){
 		Stave& stave = g_game->getStave();
 		if (alive && stave.hitNote(*this)) {
 			SND::hitnote(pitch);
-			std::cout << "hit note" << std::endl;	
 			alive = false;
 			//g_game->getDemon().hurt(1);
 			EffectType effectType;
